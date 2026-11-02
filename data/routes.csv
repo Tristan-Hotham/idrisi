@@ -1,0 +1,64 @@
+from,to,miles,days,ocr_line,ocr_text,from_lat,from_lon,to_lat,to_lon,km,km_per_mile,km_per_day
+Fez,Meknes,40.0,,5062,"De Fèz à Mecnâsa (Méquinèz) , on compte 40 milles, on se dirigeant",34.063,-4.973,33.895,-5.555,56.8,1.421,
+Aghmat,Marrakesh,12.0,,4623,"Au nord d'Aghmât , à la distance de 1 2 milles , est Maroc (Harrâ-",31.426,-7.802,31.63,-7.99,28.8,2.404,
+Jijel,Bejaia,30.0,,6297,"De Constantine à Djîdjil 4 journées, de Djidjil à Bougie 30 milles.",36.821,5.766,36.75,5.084,61.2,2.042,
+Algiers,Tamenfoust,18.0,,5859,"D’Alger à Tàmadfous (Matifou), en se dirigeant vers l’est, 18 milles.",36.776,3.059,36.806,3.226,15.2,0.847,
+Bizerte,Tabarka,70.0,,7275,"De Bizerte à Tabarca , on compte 70 milles. Cette dernière est une",37.274,9.874,36.954,8.758,105.2,1.502,
+Monastir,Mahdia,30.0,,8024,"D'al-Monastir à al-Mahdiya , on compte 30 milles. Du même lieu à",35.777,10.826,35.505,11.062,37.0,1.234,
+Tocra,Ptolemais (Tolmeita),50.0,,8513,"De là à Tolmaitsa, 50 milles.",32.533,20.583,32.709,20.95,39.6,0.791,
+Barca (al-Marj),Ajdabiya,152.0,6.0,8392,"De liarca à Âdjdàfaia , 6 journées ou 152 milles.",32.5,20.833,30.755,20.226,202.4,1.331,33.7
+Barca (al-Marj),Alexandria,550.0,21.0,8394,"De Barca à Alexandrie, 21 journées ou 550 milles.",32.5,20.833,31.2,29.918,869.9,1.582,41.4
+Rosetta (Rashid),Alexandria,60.0,,10097,"De Rosette à Alexandrie, on compte 60 milles, savoir: .",31.404,30.417,31.2,29.918,52.6,0.876,
+Cadiz,Tarifa,63.0,,11186,"De Cadix à Tarifa , 63 milles.",36.527,-6.288,36.014,-5.604,83.7,1.329,
+Faro (Santa Maria),Silves,28.0,,11223,"De la ville de Santa-Maria à celle de Silves , 28 milles.",37.019,-7.93,37.189,-8.439,48.9,1.748,
+Guadalajara,Medinaceli,50.0,,11809,"De Guadalaxara, en se dirigeant vers l’orient, à Medinaceli, 50 milles.",40.633,-3.167,41.172,-2.434,85.9,1.719,
+Daroca,Zaragoza,60.0,,11850,"190 De Daroca à Saragosse, 60 milles.",41.114,-1.414,41.649,-0.889,73.9,1.231,
+Calatayud,Zaragoza,50.0,,11852,"De Calatayud à Saragosse, également 50 milles.",41.353,-1.643,41.649,-0.889,70.9,1.418,
+Zaragoza,Huesca,40.0,,11881,"De Saragosse à Uuesca , 40 milles.",41.649,-0.889,42.14,-0.408,67.6,1.689,
+Huesca,Lleida,70.0,,11883,"De Hnesca à Lérida , 70 milles.",42.14,-0.408,41.617,0.62,103.1,1.473,
+Mequinenza,Tortosa,50.0,2.0,11890,De Mequinenza à Tortose on compte 2 journées ou SO milles.,41.372,0.301,40.812,0.521,64.9,1.299,32.5
+Tarragona,Barcelona,60.0,,11913,"De Tarrsgone à Barcelone, en se dirigeant vers l'orient, 60 milles.",41.119,1.245,41.385,2.173,83.0,1.384,
+Alzira,Xativa,12.0,,11982,"D'Alcira à Xativa , 12 milles.",39.151,-0.435,38.99,-0.518,19.3,1.607,
+Valencia,Denia,65.0,,11992,"De Valence à Dénia, en suivant le golfe'), 65 milles.",39.47,-0.376,38.84,0.106,81.5,1.253,
+Valencia,Cullera,25.0,,11994,"De Valence à la forteresse de Cullera, 25 milles.",39.47,-0.376,39.164,-0.254,35.6,1.424,
+Xativa,Bocairent,40.0,,12026,"De Xativa à Bocayrente, vers l'occident'), 40 milles.",38.99,-0.518,38.767,-0.612,26.1,0.652,
+Bocairent,Denia,40.0,,12035,"De Bocayrente à Dénia, 40 milles.",38.767,-0.612,38.84,0.106,62.7,1.569,
+Orihuela,Murcia,12.0,,12074,"D'Orihuela à Murcie, 12 milles.",38.085,-0.944,37.983,-1.13,19.8,1.654,
+Cartagena,Murcia,40.0,,12153,"De Carthagènc à Murcie on compte . par terre , 40 milles.",37.606,-0.986,37.983,-1.13,43.8,1.095,
+Lorca,Murcia,40.0,,12299,De Lorca à Murcie on compte 40 milles.,37.677,-1.701,37.983,-1.13,60.6,1.515,
+Almunecar,Granada,40.0,,12487,"D'Almoftecar à Grenade, par terre, 40 milles.",36.734,-3.69,37.177,-3.599,49.9,1.248,
+Granada,Loja,23.0,,12868,"De Grenade à Loja, en suivant le fleuve, 23 milles.",37.177,-3.599,37.169,-4.151,48.9,2.127,
+Almunecar,Malaga,80.0,,12872,"D’Almunecar à Malaga , 80 milles.",36.734,-3.69,36.721,-4.421,65.2,0.815,
+Malaga,Granada,80.0,,12890,"De Maluga à Grenade, 80 milles;",36.721,-4.421,37.177,-3.599,88.9,1.111,
+Lucena,Cordoba,40.0,,12992,"De Lucena à Cordoue, on compte 40 milles.",37.409,-4.485,37.888,-4.779,59.2,1.48,
+Ecija,Cordoba,35.0,,13012,"D’Ëcija à Cordoue , 35 milles.",37.542,-5.083,37.888,-4.779,46.9,1.339,
+Ecija,Carmona,45.0,,13020,"D'Ecija à Carmona, 45 milles.",37.542,-5.083,37.471,-5.646,50.3,1.117,
+Jerez de la Frontera,Isla de Leon (San Fernando),12.0,,13049,"De Xérès à l’ile de Cadix (l’ile de Léon), 12 milles, savoir: de Xérès",36.686,-6.137,36.463,-6.198,25.4,2.116,
+Cordoba,Madinat al-Zahra,5.0,,13475,De Cordoue à az-Zahrà on compte 5 milles.,37.888,-4.779,37.888,-4.867,7.7,1.545,
+Cordoba,Granada,100.0,4.0,13655,De Cordoue à Grenade on compte 4 journées ou 100 milles ;,37.888,-4.779,37.177,-3.599,130.7,1.307,32.7
+Sale,Fez,,4.0,4995,"De Salà à Fèz (Fâs) , 4 journées. La ville de Fèz consiste propre-",34.053,-6.798,34.063,-4.973,168.1,,42.0
+Fez,Sijilmasa,,13.0,5042,"De Fèz à Sidjilmàsa , 13 journées. On passe par Gofroui , on se rend",34.063,-4.973,31.276,-4.271,316.8,,24.4
+Tlemcen,Tahert (Tiaret),,4.0,5683,"De Tlemcen à Tàhart , 4 journées , savoir :",34.878,-1.315,35.371,1.317,245.6,,61.4
+Tenes,Miliana,,2.0,5798,"De Tenès à Milyâna , par terre , 2 journées.",36.511,1.306,36.305,2.227,85.5,,42.8
+M'Sila,Tobna,,2.0,6116,D’al-Masila on se rènd à Tobna en 2 journées.,35.706,4.542,35.35,5.35,83.1,,41.6
+Tobna,Bejaia,,6.0,6130,"De Tobna à Bougie, on compte 6 journées.",35.35,5.35,36.75,5.084,157.5,,26.2
+Constantine,Bejaia,,6.0,6295,"De Constantine à Bougie, 6 journées, savoir:",36.365,6.615,36.75,5.084,143.3,,23.9
+Collo,Constantine,,2.0,6406,"D’al-Coll à Constantine, on compte 2 journées, en se dirigeant vers",37.006,6.562,36.365,6.615,71.4,,35.7
+Setif,Constantine,,4.0,6418,"De Satif à Constantine , on compte 4 journées.",36.19,5.411,36.365,6.615,109.7,,27.4
+Sfax,Gafsa,,3.0,6911,"De Sfai à Cafça , en se dirigeant vers le sud-ouest , 3 journées.",34.74,10.76,34.425,8.784,184.3,,61.4
+Sfax,Mahdia,,2.0,6934,"De Sfai à al-Mahdiya , on compte 2 journées.",34.74,10.76,35.505,11.062,89.4,,44.7
+Kairouan,Tunis,,2.0,7097,"D'aUCairawân à Tunis, on compte un peu plus de 2 journées de",35.678,10.096,36.806,10.181,125.7,,62.8
+Barca (al-Marj),Awjila,,10.0,8390,"De Barca à Audjala on compte, par le désert, 10 journées de caravane.",32.5,20.833,29.108,21.287,379.7,,38.0
+Fustat (Old Cairo),Oxyrhynchus (al-Bahnasa),,7.0,10130,"De Miçr à al-Bahna$â, on compte 7 journées.",30.006,31.233,28.537,30.66,172.5,,24.6
+Fustat (Old Cairo),Aswan,,26.0,3886,"De Miçr à Syène , on compte 26 journées.",30.006,31.233,24.089,32.899,678.3,,26.1
+Algeciras,Seville,,5.0,11025,"D’ Algëziras à Séville on compte 5 journées , et d’Algéziras à Malaga ,",36.131,-5.454,37.389,-5.984,147.6,,29.5
+Silves,Badajoz,,3.0,11252,"De SiWes à Badajoi , 3 journées.",37.189,-8.439,38.879,-6.97,227.7,,75.9
+Evora,Badajoz,,2.0,11332,"D’Evora à Badajox, vers l’orient, 2 journées.",38.571,-7.909,38.879,-6.97,88.4,,44.2
+Badajoz,Seville,,6.0,11356,De Badajoz à Séville on compte 6 journées en passant par Uadjar,38.879,-6.97,37.389,-5.984,186.8,,31.1
+Badajoz,Cordoba,,6.0,11359,"De Badajoz à Cordoue par la grande route , 6 journées.",38.879,-6.97,37.888,-4.779,220.5,,36.7
+Merida,Alcantara,,2.0,11451,"De Mérida à Cantara as-saif (Alcantara) , 2 journées.",38.916,-6.344,39.718,-6.884,100.6,,50.3
+Santarem,Badajoz,,4.0,11631,De Santarcm à Badajoz on compte 4 journées. A droite de la route,39.236,-8.686,38.879,-6.97,153.4,,38.3
+Valencia,Zaragoza,,9.0,11969,"De Valence à Saragosse, en passant par Cutanda, 9 journées.",39.47,-0.376,41.649,-0.889,246.1,,27.3
+Murcia,Valencia,,5.0,12180,De Murcie à Valence on compte 5 journées.,37.983,-1.13,39.47,-0.376,177.8,,35.6
+Murcia,Almeria,,5.0,12182,"De Murcie à Almérie, en suivant la côte, 5 journées.",37.983,-1.13,36.834,-2.464,173.8,,34.8
+Cordoba,Almeria,,8.0,13489,De Cordoue à Almérie on compte 8 journées ;,37.888,-4.779,36.834,-2.464,235.8,,29.5

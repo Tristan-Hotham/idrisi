@@ -1,0 +1,153 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\newfontfamily\headfont{Inter}[UprightFont=*-ExtraBold,BoldFont=*-ExtraBold,Extension=.otf,Path=/usr/share/fonts/opentype/inter/]
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{graphicx,booktabs,float,caption,array,xcolor,longtable}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[round]{natbib}
+\usepackage{setspace}
+\setstretch{1.05}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\titleformat{\section}{\headfont\Large}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\headfont\large}{\thesubsection}{0.8em}{}
+\captionsetup{font=small,labelfont=bf}
+\urlstyle{same}
+\hypersetup{pdftitle={Al-Idrisi's World},pdfauthor={Tristan Hotham}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Al-Idrisi's World: The Map Made for Roger II of Sicily in 1154, Set Against a Modern Map\par}
+\vspace{0.4em}
+{\large {{source.n|int}} towns on Konrad Miller's reconstruction, measured for direction, distance, climate and scale, and compared with the Hereford Mappa Mundi\par}
+\vspace{1.2em}
+{\large Tristan Hotham\par}
+\vspace{0.3em}
+{\small Independent researcher\\
+ORCID: 0000-0003-4931-9349\\
+DOI: \href{https://doi.org/{{meta.doi}}}{https://doi.org/{{meta.doi}}}\par}
+\vspace{0.8em}
+2026
+\end{center}
+
+\begin{quote}
+\small
+\begin{center}\textbf{Abstract}\end{center}
+Al-Idrisi's world map, finished in Palermo in 1154 for Roger II of Sicily, is drawn with south at the top on a grid of seven climates and ten sections. I located {{source.n|int}} legible town labels on Konrad Miller's 1928 reconstruction of the map, identified each with a modern place, checked the positions against three gazetteers, and measured how the map, turned north up, distorts the world. Directions are well kept: across {{pairs.n|int}} pairs of towns at least 100 km apart the median error in bearing is {{pairs.median_brg_err|int}} degrees and {{pairs.within45_pct|int}}\% lie within 45 degrees. The best affine fit of the whole map puts the median town {{affine.median_resid_km|int}} km from its real position. Locally the map is more faithful: the median distance between a town and the position predicted from its eight nearest neighbours is {{local.median_km|int}} km, rising from {{groups.Mediterranean.median_local_km|int}} km around the Mediterranean to {{groups.Northern Europe.median_local_km|int}} km in northern Europe and {{groups.Asia beyond the Euphrates.median_local_km|int}} km in Asia beyond the Euphrates. Sicily is both the most faithfully drawn region ({{regions.Sicily and Malta.median_local_km|int}} km) and the most enlarged ({{regions.Sicily and Malta.stretch|f2}} times the map's average scale). The climates keep the order of latitude but not its spacing: the boundaries implied by the towns fall at about {{climate_summary.bounds.0|f1}}, {{climate_summary.bounds.1|f1}}, {{climate_summary.bounds.2|f1}}, {{climate_summary.bounds.3|f1}}, {{climate_summary.bounds.4|f1}} and {{climate_summary.bounds.5|f1}} degrees north. {{routes.n|int}} route distances from Dozy and de Goeje's 1866 edition give a median of {{routes.median_km_per_mile|f2}} km of straight line per stated mile and about {{routes.median_km_per_day|int}} km per day stage. Measured exactly as in my study of the Hereford Mappa Mundi (about 1300), al-Idrisi's map explains {{jerusalem.sim_r2|f2}} of the spread of real positions about Jerusalem against {{hereford.fit_r2|f2}}, with a median miss of {{jerusalem.sim_median_disp_km|int}} km against {{hereford.median_disp_km|int}} km.
+
+\textbf{Keywords:} medieval cartography; Islamic geography; al-Idrisi; Tabula Rogeriana; Roger II; map distortion; climates; historical gazetteers; open data
+\end{quote}
+
+\section{Introduction}
+Abu Abd Allah Muhammad al-Idrisi, born in Ceuta, worked at the court of Roger II, the Norman king of Sicily, and in 1154 completed for him a geography, the \textit{Nuzhat al-mushtaq}, often called the Book of Roger, together with a world map. The work divides the inhabited world into the seven climates of Greek and Islamic geography, bands of latitude from the equator northward, and each climate into ten sections from west to east; each of the seventy sections has its own description and its own sheet. Joined, the sheets form a rectangular map of the world with south at the top. The original is lost; the map is known from manuscript copies of the section maps, which Konrad Miller assembled into a single reconstruction in 1928 \citep{miller1928}.
+
+This paper sets that reconstruction against a modern map. It asks how well the map keeps direction and distance; where it is most and least faithful; whether its climates follow latitude; how it treats the Nile and Britain; how its book's stated distances compare with real ones; and how it compares, on the same measures, with the Hereford Mappa Mundi, a Christian world map drawn about {{source.years_apart|int}} years later, which I analysed in an earlier study \citep{hereford}. It accompanies an interactive comparison (\url{{{meta.page}}}).
+
+\section{Data}
+\textbf{The map.} Miller's reconstruction \citep{miller1928}, from Wikimedia Commons (public domain), scanned at {{source.img_w|int}} by {{source.img_h|int}} pixels. Miller redrew the map from the manuscripts and transcribed every name into Latin letters; all positions in this study are therefore positions on Miller's sheet, not on a medieval manuscript.
+
+\textbf{The text.} \citet{dozy} edited and translated the parts of the Book of Roger on North Africa and Spain. The Internet Archive's text of that edition (public domain) supplies the route distances.
+
+\textbf{Gazetteers.} al-Thurayya \citep{thurayya}, a gazetteer of the places and routes of the early Islamic world with modern coordinates, derived from Cornu's atlas (CC BY 4.0); Pleiades \citep{pleiades}, version {{source.pleiades_version|raw}} (CC BY 3.0); and Natural Earth countries and populated places \citep{naturalearth}.
+
+\section{Methods}
+\subsection{Reading and locating towns}
+Miller drew settlements as small brown discs with spokes, each beside its transcribed name. I read the labels section by section at full resolution and recorded, for each town I could read and identify with confidence, the pixel of its disc and my confidence ({{source.high|int}} read clearly, {{source.medium|int}} with some doubt because the label is crowded, faded or ambiguous). I left out rivers, mountains, regions and peoples, and every label I could not identify. To make positions reproducible I detected the discs automatically, first by shape (a colour mask, a morphological opening and a test for round blobs of the right size) and then by matching a template built from the clean discs; {{source.discs|int}} candidate discs were found, and {{source.snapped|int}} of my readings ({{source.snapped_pct|int}}\%) were snapped to a disc within 20 pixels, a median {{source.snap_median_px|f1}} pixels away. Readings left unsnapped were checked by eye on close-up images, and eleven positions were corrected in this way.
+
+\subsection{Modern positions}
+I gave each identification a modern position and checked it against the three gazetteers by name: al-Thurayya by Miller's transliteration and by the identification, Pleiades by attested and romanised names, Natural Earth by modern names. {{source.checked|int}} of the {{source.n|int}} towns ({{source.checked_pct|int}}\%) matched a gazetteer entry of the same name within 150 km, at a median distance of {{source.check_median_km|f1}} km from my position ({{source.thurayya|int}} in al-Thurayya, {{source.pleiades|int}} in Pleiades, {{source.naturalearth|int}} in Natural Earth); every match more than 30 km away was reviewed. The towns not matched are small places the gazetteers do not list. Each town was assigned to one of {{source.regions|int}} regions (Table~\ref{tab:regions}).
+
+\subsection{Measures}
+All measures use the map turned through 180 degrees, so that north is up. The \textit{global fit} is the affine map (least squares) from map position to longitude and latitude; the \textit{residual} of a town is the great circle distance between its real position and its fitted position. The \textit{local error} of a town is obtained by fitting an affine map from map position to an azimuthal equidistant projection centred on the town, using only its eight nearest neighbours by true distance, and measuring how far that fit puts the town from its real position; it measures how well the map keeps the shape of each neighbourhood, regardless of distortion at the scale of the whole map. For each region with at least five towns I also computed, over all pairs of towns in the region at least 100 km apart, the median absolute difference between the bearing on the map and the true initial bearing, and the median ratio of map distance to true distance relative to the same median over all pairs on the map (the \textit{stretch}, as in the Hereford study). Because the map is a rectangular grid, stretch was also computed for a perfect rectangular grid with the fitted ratio of degrees of longitude to degrees of latitude, to separate the effect of the grid from the mapmaker's choices.
+
+The climate of each town is read from Miller's red climate lines, located automatically in each of the ten sections. For each pair of neighbouring climates, the \textit{implied boundary} is the latitude that best separates the towns of the two climates. For the comparison with Hereford I repeated that study's method exactly: the similarity transform (rotation, uniform scale and shift) that best lays the map positions on an azimuthal equidistant projection centred on Jerusalem, and bearings from Jerusalem on the map and on the globe.
+
+\subsection{Route distances}
+From \citet{dozy} I took {{routes.n|int}} distances stated between two places I could identify, over land or along a coast: {{routes.n_miles|int}} in miles and {{routes.n_days|int}} in day stages (some give both). Each was checked against the line of the scan's text it comes from, which is recorded in the data. I compared each with the great circle distance between the places.
+
+\section{Results}
+\subsection{The towns and the whole-map fit}
+Figure~\ref{fig:maps} shows the {{source.n|int}} towns on the map and on a modern map. The global affine fit explains {{affine.r2_lon|f2}} of the variance in longitude and {{affine.r2_lat|f2}} in latitude. It draws a degree of longitude {{affine.lon_lat_ratio|f2}} times as long as a degree of latitude, the ratio of a rectangular grid true to scale at about {{affine.true_scale_lat|int}} degrees north. The median residual is {{affine.median_resid_km|int}} km, {{affine.within250_pct|int}}\% of towns are within 250 km of their fitted position and {{affine.within500_pct|int}}\% within 500 km (Figure~\ref{fig:arrows}).
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_maps.jpg}
+\caption{The located towns on Miller's reconstruction, turned north up (top), and on a modern map (bottom), coloured by region.}\label{fig:maps}\end{figure}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_arrows.png}
+\caption{From each town to its position under the best affine fit of the whole map, with the map's climate lines carried onto the globe.}\label{fig:arrows}\end{figure}
+
+\subsection{Direction and local shape}
+Directions are well kept. Across all {{pairs.n|int}} pairs of towns at least 100 km apart, the median bearing error is {{pairs.median_brg_err|int}} degrees and {{pairs.within45_pct|int}}\% are within 45 degrees; the rank correlation between map and true distance is {{pairs.spearman_dist|f2}}. The median local error is {{local.median_km|int}} km, with {{local.within100_pct|int}}\% of towns within 100 km and {{local.within200_pct|int}}\% within 200 km. Table~\ref{tab:regions} and Figure~\ref{fig:regions} give the figures by region. The most faithful regions are Sicily ({{regions.Sicily and Malta.median_local_km|int}} km), Syria and Palestine ({{regions.Syria and Palestine.median_local_km|int}} km), Morocco and Algeria and Iberia ({{regions.Iberia.median_local_km|int}} km each), and Italy ({{regions.Italy and Corsica.median_local_km|int}} km); the least faithful are Arabia ({{regions.Arabia.median_local_km|int}} km), central and eastern Europe ({{regions.Central and Eastern Europe.median_local_km|int}} km) and Sind and India ({{regions.Sind and India.median_local_km|int}} km). Grouped, the Mediterranean regions have a median local error of {{groups.Mediterranean.median_local_km|int}} km ({{groups.Mediterranean.n|int}} towns), northern Europe {{groups.Northern Europe.median_local_km|int}} km ({{groups.Northern Europe.n|int}}) and Asia beyond the Euphrates {{groups.Asia beyond the Euphrates.median_local_km|int}} km ({{groups.Asia beyond the Euphrates.n|int}}).
+
+{{TABLE_REGIONS}}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_regions.png}
+\caption{Median local error by region: the distance from each town to the position predicted by an affine fit to its eight nearest neighbours.}\label{fig:regions}\end{figure}
+
+\subsection{Scale and Sicily}
+Relative to the map's average scale, Sicily is drawn largest ({{regions.Sicily and Malta.stretch|f2}}), followed by Greece and the Balkans ({{regions.Greece and the Balkans.stretch|f2}}), England and Italy ({{regions.England.stretch|f2}}) and Syria and Palestine ({{regions.Syria and Palestine.stretch|f2}}); Morocco and Algeria ({{regions.Morocco and Algeria.stretch|f2}}) and Arabia ({{regions.Arabia.stretch|f2}}) are drawn smallest. A perfect rectangular grid with the map's proportions would leave Sicily at {{regions.Sicily and Malta.grid_stretch|f2}}, so its enlargement is not an artefact of the grid. The local fit for Sicily is rotated by about {{regions.Sicily and Malta.rotation|abs}} degrees, which explains why its bearing error ({{regions.Sicily and Malta.median_brg_err|int}} degrees) is among the highest even though its local error is the lowest (Figure~\ref{fig:sicily}).
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_sicily.jpg}
+\caption{Sicily on Miller's reconstruction (turned north up) and today.}\label{fig:sicily}\end{figure}
+
+\subsection{The climates}
+The median latitude of the towns rises without a break from climate to climate (Table~\ref{tab:climates}, Figure~\ref{fig:climates}). Every climate is drawn about the same height (a mean of {{climate_summary.height_px|int}} pixels), but the implied boundaries fall at {{climate_summary.bounds.0|f1}}, {{climate_summary.bounds.1|f1}}, {{climate_summary.bounds.2|f1}}, {{climate_summary.bounds.3|f1}}, {{climate_summary.bounds.4|f1}} and {{climate_summary.bounds.5|f1}} degrees north: the second climate spans {{climate_summary.south_width|f1}} degrees and the third to sixth an average of {{climate_summary.north_mid_width|f1}}. With these boundaries {{climate_summary.right_climate_pct|int}}\% of towns lie in the climate their latitude would give and all lie within one. The first and seventh climates are thinly sampled ({{climates.1.n|int}} and {{climates.7.n|int}} towns).
+
+{{TABLE_CLIMATES}}
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_climates.png}
+\caption{True latitude of the towns in each climate. Dashed lines: implied boundaries.}\label{fig:climates}\end{figure}
+
+\subsection{The Nile}
+The text places the source of the Nile in the Mountains of the Moon, ``whose beginning is sixteen degrees beyond the equinoctial line'' \citep{dozy}, and quotes Qudama that the river runs {{nile.text_length_miles|int}} miles from source to sea. On Miller's sheet the mountains sit only about {{nile.moon_px_south_of_equator|int}} pixels beyond the equator line, about {{nile.moon_frac_climate|f2}} of the height of a climate, so the map does not show sixteen degrees. At 1.92 to 2.0 km to the Arab mile, {{nile.text_length_miles|int}} miles is {{routes.nile_km_at_lo|int}} to {{routes.nile_km_at_hi|int}} km, against about {{nile.nile_km_real|int}} km for the real river. Along the river itself the map is good: under the global fit Aswan falls at {{nile.aswan_fit_lat|f1}} degrees north (really {{nile.aswan_lat|f1}}) and Alexandria at {{nile.alexandria_fit_lat|f1}} (really {{nile.alexandria_lat|f1}}), and Egypt's towns span {{nile.egypt_lat_span_fit|f1}} degrees of fitted latitude against {{nile.egypt_lat_span_real|f1}} in reality.
+
+\subsection{Britain}
+I could read {{britain.n|int}} English towns, too few for firm conclusions. They straddle the boundary between the sixth and seventh climates. Under the global fit their median latitude error is within a tenth of a degree, while they are displaced {{britain.lon_shift|f1}} degrees of longitude to the east, and the local fit is rotated about {{regions.England.rotation|int}} degrees clockwise: Paris, {{britain.london_paris_brg_true|int}} degrees from London in reality, is drawn at {{britain.london_paris_brg_map|int}} degrees. Measured from Jerusalem, the English towns point the right way to within a median {{jerusalem.england_brg_err|int}} degrees, against {{hereford.britain_brg_err|int}} for the British places on the Hereford map.
+
+\subsection{Route distances}
+The stated miles rise with the straight line distance (Spearman {{routes.spearman_miles|f2}}; Figure~\ref{fig:routes}), at a median of {{routes.median_km_per_mile|f2}} km per mile (interquartile range {{routes.q1_km_per_mile|f2}} to {{routes.q3_km_per_mile|f2}}). If the Arab mile is taken as 1.92 to 2.0 km, the stated road distances are {{routes.road_factor_lo|f2}} to {{routes.road_factor_hi|f2}} times the straight line, plausible for roads; alternatively the miles of these itineraries were shorter. A day stage is a median {{routes.median_km_per_day|int}} km of straight line (interquartile range {{routes.q1_km_per_day|int}} to {{routes.q3_km_per_day|int}}; Spearman {{routes.spearman_days|f2}}), and in the {{routes.n_both|int}} routes that give both, a day is about {{routes.median_miles_per_day|int}} miles. For the {{routes.n_on_map|int}} routes in miles with both ends located on the map, map distance correlates more closely with the stated miles (Spearman {{routes.spearman_map_miles|f2}}) than with the true distance ({{routes.spearman_map_km|f2}}), consistent with a map compiled from itineraries, though the sample is small.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_routes.png}
+\caption{Distances stated in the Book of Roger (North Africa and Spain) against the great circle distance between the two places.}\label{fig:routes}\end{figure}
+
+\subsection{Comparison with the Hereford Mappa Mundi}
+On the Hereford study's measures (Figure~\ref{fig:compare}), the similarity fit about Jerusalem explains {{jerusalem.sim_r2|f2}} of the spread of real positions on al-Idrisi's map against {{hereford.fit_r2|f2}} on Hereford; the median displacement is {{jerusalem.sim_median_disp_km|int}} km against {{hereford.median_disp_km|int}} km; the median bearing error from Jerusalem is {{jerusalem.median_brg_err|int}} degrees against {{hereford.bearing_median_err|int}}; and {{jerusalem.within45_pct|int}}\% of places lie within 45 degrees against {{hereford.bearing_within45_pct|int}}\%. Hereford draws the Holy Land at {{hereford.holyland_stretch|f1}} times its average scale; al-Idrisi draws Syria and Palestine at {{regions.Syria and Palestine.stretch|f2}}.
+
+\begin{figure}[tbp]\centering\includegraphics[width=\textwidth]{f_compare.png}
+\caption{The same tests on al-Idrisi's map and on the Hereford Mappa Mundi.}\label{fig:compare}\end{figure}
+
+\section{Limitations}
+First, the map measured is Miller's reconstruction, which joins and redraws the section maps of the manuscripts; where his work departs from them, so do these measurements. Second, the sample is the legible, identifiable towns, about {{source.n|int}} of a much larger number of names; it favours well documented places, and it is thin in India and Central Asia, eastern Europe and Africa south of the Sahara ({{regions.Sind and India.n|int}}, {{regions.Central and Eastern Europe.n|int}} and {{regions.West Africa.n|int}} towns). Third, the identifications and modern positions are mine; {{source.checked_pct|int}}\% were confirmed in a gazetteer, and the rest are small places whose identification rests on the name and its position among its neighbours. Fourth, with clear readings only ({{high_only.n|int}} towns) the median local error is {{high_only.median_local_km|int}} km and the median global residual {{high_only.median_resid_km|int}} km, close to the full sample's. Fifth, the route distances come from one edition covering only North Africa and Spain, read from OCR and checked line by line, and the length of the Arab mile is uncertain. Sixth, the Hereford comparison sets a sample of medieval towns against a sample dominated by classical names; it compares the maps as sources of positions, not their makers' purposes.
+
+\section{Conclusion}
+Turned north up, al-Idrisi's map is a recognisable map of the Old World. It keeps directions between towns to a median of {{pairs.median_brg_err|int}} degrees and keeps the shape of neighbourhoods best where its informants were most numerous: around the Mediterranean, and above all in Sicily, which it also draws larger than anywhere else. Its climates order the world by latitude while compressing the south and spreading out the populous middle latitudes. On the measures I applied to the Hereford Mappa Mundi, it is the more accurate map, as befits a geographer's survey compiled from travellers rather than a picture of Scripture and history; but both spend their space most generously on home.
+
+\section*{Data and code availability}
+The interactive comparison is at \url{{{meta.page}}}. Data and code are at \url{{{meta.repo}}} and archived with this paper at \url{https://doi.org/{{meta.doi}}}. Derived data are released under CC BY 4.0 and code under the MIT licence. Miller's reconstruction and the 1866 edition are in the public domain; al-Thurayya data are CC BY 4.0 and Pleiades data CC BY 3.0.
+
+\section*{AI statement}
+I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.
+
+\begin{thebibliography}{9}
+\bibitem[Dozy and de Goeje(1866)]{dozy} Dozy, R. and de Goeje, M. J. (1866) \textit{Description de l'Afrique et de l'Espagne par Edrisi}. Leiden: Brill. Internet Archive scan, public domain. \url{https://archive.org/details/bub_gb_6EMNNqPF2zAC}
+\bibitem[Hotham(2026)]{hereford} Hotham, T. (2026) The world according to the Hereford Mappa Mundi: a medieval map of the world set against a modern one. Zenodo. \url{https://doi.org/10.5281/zenodo.23878612}
+\bibitem[Miller(1928)]{miller1928} Miller, K. (1928) \textit{Charta Rogeriana: Weltkarte des Idrisi vom Jahr 1154 n. Ch.} Stuttgart. Wikimedia Commons, public domain. \url{https://commons.wikimedia.org/wiki/File:Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg}
+\bibitem[Natural Earth(2026)]{naturalearth} Natural Earth (2026) Admin 0 countries and populated places, 1:50m and 1:10m. Public domain. \url{https://www.naturalearthdata.com/}
+\bibitem[Pleiades(2026)]{pleiades} Bagnall, R. et al., eds. (2026) Pleiades: a gazetteer of past places, version {{source.pleiades_version|raw}}. CC BY 3.0. \url{https://pleiades.stoa.org/}
+\bibitem[Seydi and Romanov(2026)]{thurayya} Seydi, M. and Romanov, M. (2026) al-Thurayya Gazetteer, places and routes of the early Islamic world, from G. Cornu (1983) \textit{Atlas du monde arabo-islamique}. CC BY 4.0. \url{https://github.com/althurayya/althurayya.github.io}
+\end{thebibliography}
+
+\clearpage
+\appendix
+\section{The route distances}
+{{TABLE_ROUTES}}
+
+\section{The located towns}
+{{TABLE_LOCATED}}
+\end{document}

@@ -1,0 +1,17 @@
+{
+ "source": "Hotham (2026), The world according to the Hereford Mappa Mundi, data/results.json",
+ "page": "https://maps.tristanhotham.com/mappa-mundi/",
+ "located_real": 140,
+ "fit_r2": 0.836,
+ "median_disp_km": 516,
+ "bearing_median_err": 19,
+ "bearing_within45_pct": 81.43,
+ "dist_spearman": 0.9,
+ "britain_names_pct": 8.1,
+ "britain_stretch": 1.5,
+ "holyland_stretch": 4.55,
+ "britain_brg_err": 8,
+ "north_africa_brg_err": 69,
+ "india_stretch": 0.71,
+ "year": 1300
+}

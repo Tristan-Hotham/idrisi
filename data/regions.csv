@@ -1,0 +1,19 @@
+region,n,pairs,scored,median_resid_km,median_local_km,median_brg_err,stretch,grid_stretch,median_lat,median_lon,rotation,excess_stretch
+England,8,22,True,175,63,39.0,1.25,0.98,51.1,-0.2,37.0,1.28
+France and the Low Countries,32,478,True,143,57,18.0,1.18,1.0,47.6,1.6,13.0,1.18
+Iberia,64,1922,True,140,37,23.0,0.84,0.99,38.9,-3.7,26.0,0.85
+Central and Eastern Europe,10,45,True,379,212,15.0,0.92,1.16,49.2,17.8,9.0,0.79
+Italy and Corsica,24,240,True,369,38,25.0,1.25,1.01,41.6,13.4,-5.0,1.24
+Sicily and Malta,20,128,True,362,21,28.0,1.42,0.99,37.6,14.4,-31.0,1.43
+Greece and the Balkans,32,458,True,315,76,20.0,1.38,0.99,41.0,24.2,-13.0,1.39
+Morocco and Algeria,33,501,True,353,37,19.0,0.68,0.99,35.4,-1.3,2.0,0.69
+Tunisia and Libya,20,179,True,253,50,18.0,0.93,0.95,33.9,10.7,-13.0,0.98
+Egypt and Nubia,25,277,True,156,61,17.0,1.13,0.89,28.5,31.2,-4.0,1.27
+Syria and Palestine,33,446,True,249,26,20.0,1.25,0.9,33.6,35.5,14.0,1.39
+Anatolia,24,261,True,253,87,20.0,1.04,1.0,38.2,35.4,7.0,1.04
+Iraq and the Jazira,23,228,True,204,54,22.0,0.87,0.93,34.2,43.7,4.0,0.94
+Arabia,21,206,True,759,156,17.0,0.59,0.88,21.4,44.4,-8.0,0.67
+Iran and the Caucasus,34,551,True,128,81,17.0,0.86,0.92,34.6,48.9,13.0,0.93
+Central Asia and Afghanistan,18,150,True,669,137,24.0,0.84,0.94,38.7,64.4,26.0,0.89
+Sind and India,9,34,True,1112,247,39.0,0.73,0.88,23.9,72.6,2.0,0.83
+West Africa,1,0,False,1921,664,,,,15.8,-8.0,,

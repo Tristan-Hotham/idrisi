@@ -1,0 +1,17 @@
+{
+ "tz": 7,
+ "tworld": 32768,
+ "tx0": 9884,
+ "ty0": 13405,
+ "img_w": 12999,
+ "img_h": 5958,
+ "minzoom": 1,
+ "maxzoom": 7,
+ "n_discs": 5329,
+ "snapped": 386,
+ "snap_median_px": 1.9,
+ "web": {
+  "small": "img/idrisi_2000.jpg",
+  "large": "img/idrisi_4000.jpg"
+ }
+}

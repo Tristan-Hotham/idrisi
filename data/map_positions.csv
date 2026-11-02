@@ -1,0 +1,432 @@
+label,identification,x,y,conf
+balarm,Palermo,10781,3250,high
+mesina,Messina,10345,3332,high
+sirakusa,Syracuse,10353,3152,high
+lentini,Lentini,10331,3195,high
+nutas,Noto,10424,3138,high
+sikla,Scicli,10359,3106,high
+ragus,Ragusa,10378,3070,high
+butira,Butera,10437,3019,high
+karkant,Agrigento,10585,3001,medium
+al saka,Sciacca,10660,3014,medium
+mazar,Mazara del Vallo,10776,3029,high
+trabana,Trapani,10837,3115,high
+kasr iani,Enna (Castrogiovanni),10555,3122,high
+tirma,Termini Imerese,10742,3273,high
+kalfudi,Cefalu,10643,3286,high
+karunia,Caronia,10524,3313,high
+bagtus,Patti,10485,3328,high
+milas,Milazzo,10401,3375,high
+tarmi,Taormina,10339,3277,high
+melita,Malta,10316,2926,high
+marnisa (kurfus),Corfu,9501,3199,high
+korkisa,Corsica,11203,3291,medium
+sarant,Sorrento,10474,3583,high
+malf,Amalfi,10407,3649,high
+nabal,Naples,10472,3702,high
+salarnu,Salerno,10370,3697,high
+gabata,Gaeta,10649,3707,high
+targina,Terracina,10720,3690,high
+ruma,Rome,10762,3629,high
+kabua,Capua,10496,3819,high
+benebent,Benevento,10285,3807,high
+bisa,Pisa,10973,3621,high
+luna,Luni,10874,3654,medium
+abrindis,Brindisi,9490,3580,high
+bari,Bari,9504,3728,high
+tarant,Taranto,9711,3616,high
+manubli,Monopoli,9509,3648,high
+fanu,Fano,10331,4003,high
+ankuna,Ancona,10259,3944,medium
+ragusa,Dubrovnik (Ragusa),9183,3846,high
+antibra,Bar (Antivari),9149,3681,high
+gadra,Zadar,9496,4228,medium
+ganua,Genoa,11013,3808,high
+fluranaia,Florence,10851,3788,medium
+ariminus,Rimini,10382,4046,high
+rabena,Ravenna,10441,4081,high
+mantua,Mantua,10674,4046,high
+beruna,Verona,10705,4087,medium
+masilia,Marseille,11199,3594,high
+sant gili,Saint-Gilles,11256,3558,high
+tolusa,Toulouse,11366,3545,high
+kaurs,Cahors,11269,3961,medium
+liun,Lyon,11156,3954,high
+bordal,Bordeaux,11519,3819,high
+limuges,Limoges,11414,4256,high
+digun,Dijon,11099,4278,high
+nifaras,Nevers,11168,4216,medium
+ankolazma,Angouleme,11456,3996,medium
+karkasuna,Carcassonne,11418,3441,high
+arbuna,Narbonne,11316,3356,high
+maiorka,Majorca (Palma),11626,3039,high
+iabesa,Ibiza,11724,3018,high
+dania,Denia,11820,3139,high
+lekant,Alicante,11918,3106,high
+els,Elche,11944,3171,high
+mursia,Murcia,11996,3216,high
+kartagena,Cartagena,12072,3154,high
+lurka,Lorca,12056,3209,high
+al meria,Almeria,12122,3073,high
+al granata,Granada,12301,3083,high
+uadias,Guadix,12206,3109,high
+basta,Baza,12176,3193,high
+gijan,Jaen,12273,3143,high
+baisa,Baeza,12336,3201,high
+abda,Ubeda,12286,3206,high
+kortoba,Cordoba,12478,3186,medium
+arsiduna,Archidona,12436,3021,high
+al monkab,Almunecar,12326,3001,high
+malaka,Malaga,12519,2941,medium
+asiha,Ecija,12496,3051,high
+osuna,Osuna,12576,3019,high
+isbilia,Seville,12604,3064,high
+seris,Jerez de la Frontera,12666,3026,high
+al gezira,Algeciras,12613,2874,high
+tarif,Tarifa,12663,2896,high
+sebta,Ceuta,12686,2826,high
+tanga,Tangier,12721,2809,high
+tetauin,Tetouan,12616,2831,high
+badis,Badis,12501,2754,medium
+melilla,Melilla,12438,2712,high
+libla,Niebla,12633,3134,high
+martala,Mertola,12594,3199,high
+batalius,Badajoz,12536,3241,high
+merida,Merida,12528,3302,medium
+medellin,Medellin,12421,3323,high
+al kantara al sif,Alcantara,12446,3356,high
+iabara,Evora,12586,3306,high
+silb,Silves,12663,3297,medium
+al kasr,Alcacer do Sal,12678,3343,high
+santarin,Santarem,12513,3391,high
+asbuna,Lisbon,12621,3411,high
+kalimria,Coimbra,12498,3441,high
+koria,Coria,12411,3393,high
+talabera,Talavera de la Reina,12306,3411,high
+tolaitola,Toledo,12204,3393,high
+kalaat rabah,Calatrava la Vieja,12173,3318,high
+kuenka,Cuenca,11846,3321,high
+satiba,Xativa,11776,3241,high
+balinsia,Valencia,11780,3179,high
+boriana,Burriana,11721,3206,high
+tartusa,Tortosa,11569,3286,high
+lerida,Lleida,11582,3429,high
+uadi al hagara,Guadalajara,11962,3423,medium
+medinat salim,Medinaceli,11877,3451,high
+kalaat aiub,Calatayud,11849,3406,high
+sarakostia,Zaragoza,11709,3461,high
+ueska,Huesca,11782,3514,high
+tutila,Tudela,11924,3501,high
+uklis,Ucles,12054,3378,high
+afraga,Fraga,11609,3386,high
+sant iakub,Santiago de Compostela,12297,3861,high
+samura,Zamora,12398,3568,high
+liun,Leon,12204,3661,high
+astorka,Astorga,12165,3721,high
+burgas,Burgos,12024,3641,high
+nagra,Najera,11938,3631,high
+kastila (logrono),Logrono,11792,3589,medium
+duia,Tui,12331,3769,medium
+banbluna,Pamplona,11697,3588,high
+nanitas,Nantes,11759,4236,high
+bataras,Poitiers,11592,4214,medium
+sant mahlu,Saint-Malo,11621,4761,high
+dinam,Dinan,11590,4676,high
+dul,Dol-de-Bretagne,11605,4581,high
+kerenbin sant karnin,Quimper (Saint-Corentin),12044,4641,medium
+abariz,Paris,11051,4594,high
+ratumagus,Rouen,11306,4704,high
+sant ualeri,Saint-Valery-sur-Somme,11038,4823,medium
+abraus,Evreux,11366,4631,medium
+arlians,Orleans,11181,4431,high
+gartas,Chartres,11328,4513,high
+tars,Tours,11313,4306,medium
+al mais,Le Mans,11436,4308,medium
+besanzun,Besancon,10864,4564,high
+berdun,Verdun,10902,4531,high
+bazla,Basel,10774,4448,high
+maiansa,Mainz,10758,4694,high
+kolunia,Cologne,10664,4743,high
+liaga,Liege,10776,4767,high
+abrugs,Bruges,10770,4894,high
+kent,Ghent,10704,4908,high
+dobrs,Dover,10928,4908,high
+hastinks,Hastings,11050,4958,high
+londr,London,10969,5003,high
+sorham,Shoreham-by-Sea,11161,4971,medium
+garham,Wareham,11371,5013,medium
+astrik,Utrecht,10571,4986,medium
+auzburk,Augsburg,10734,4391,high
+agrims,Grimsby,10700,5324,high
+nikula,Lincoln,11048,5291,medium
+salaberis,Salisbury,11351,5281,high
+marrakes,Marrakesh,12554,2299,high
+agmat uarika,Aghmat,12521,2278,high
+tinmalal,Tinmel,12441,2249,high
+sigilmasa,Sijilmasa,12166,2166,high
+tarudant,Taroudant,12546,2156,high
+asafi,Safi,12756,2201,high
+anfa,Anfa (Casablanca),12754,2456,high
+sala,Sale,12736,2541,high
+fas,Fez,12551,2601,high
+miknasa,Meknes,12661,2536,high
+kasr abd al karim,Ksar el-Kebir,12721,2646,high
+talamsan,Tlemcen,12206,2676,high
+sersal,Cherchell,12051,2694,high
+gezair bani mazgani,Algiers,11906,2649,high
+tadellis,Dellys,11781,2701,high
+begaia,Bejaia,11696,2628,high
+kosantina,Constantine,11566,2506,high
+mila,Mila,11631,2513,high
+setif,Setif,11716,2571,high
+al kol,Collo,11549,2606,high
+biskra,Biskra,11578,2299,high
+tobna,Tobna,11764,2396,high
+al mesila,M'Sila,11906,2399,high
+kalaat bani hamud,Qal'at Beni Hammad,11841,2441,high
+tahort,Tahert (Tiaret),12199,2516,high
+meliana,Miliana,12101,2556,high
+uahran,Oran,12283,2793,medium
+tunis,Tunis,11091,2594,high
+kartagina,Carthage,11116,2649,high
+al kairuan,Kairouan,10983,2481,high
+al mahdia,Mahdia,10898,2506,medium
+susa,Sousse,10956,2521,medium
+asfakis,Sfax,10953,2441,high
+kafsa,Gafsa,11129,2393,high
+tauzer,Tozeur,11249,2334,high
+kafs,Gabes,10973,2334,medium
+atrablus,Tripoli (Libya),10586,2443,high
+lebda,Lebda (Leptis Magna),10414,2533,high
+sort,Sirte,10084,2306,high
+baga,Beja,11231,2606,high
+tabarka,Tabarka,11313,2636,high
+buna,Annaba (Bone),11401,2656,high
+gadames,Ghadames,10871,2073,high
+barka,Barca (al-Marj),9171,2366,high
+teukara,Tocra,9251,2331,high
+tolmaita,Ptolemais (Tolmeita),9173,2578,high
+agdabia,Ajdabiya,9456,2156,high
+augila,Awjila,9531,2134,high
+santaria,Siwa,8834,1921,high
+al iskanderia,Alexandria,8196,2554,high
+rasid,Rosetta (Rashid),8061,2623,high
+misr,Fustat (Old Cairo),7977,2119,high
+ain sams,Heliopolis (Ain Shams),7856,2069,high
+al kolzum,Suez (al-Qulzum),7602,2178,high
+faran,Pharan (Feiran),7464,2179,medium
+al aris,El Arish,7568,2411,high
+al farama,Pelusium (al-Farama),7639,2449,high
+refah,Rafah,7506,2356,high
+gazza,Gaza,7408,2338,high
+askalan,Ashkelon,7414,2416,high
+al mahalla,El Mahalla el Kubra,7966,2484,high
+samnud,Samannud,7876,2459,medium
+ahnas,Ihnasya (Ahnas),8189,1896,high
+miniat ibn al hasib,Minya,7956,1848,medium
+asuan,Aswan,7989,1273,high
+arment,Armant,8026,1351,high
+asnah,Esna,8081,1424,high
+kus,Qus,7993,1573,high
+kaft,Qift,8038,1601,high
+ahmim,Akhmim,8086,1623,high
+assiut,Asyut,8112,1534,high
+al bahnasa,Oxyrhynchus (al-Bahnasa),8263,1786,high
+ansana,Antinoe (Ansina),7998,1774,high
+asmun,Hermopolis (al-Ashmunayn),8003,1814,high
+donkla,Old Dongola,8726,666,medium
+eriha,Jericho,7103,2281,high
+al halil,Hebron,7170,2326,high
+al kuds,Jerusalem,7260,2298,high
+al ramla,Ramla,7280,2369,high
+iafa,Jaffa,7310,2399,high
+kaisaria,Caesarea,7260,2450,high
+tabaria,Tiberias,7067,2458,high
+akka,Acre,7188,2491,high
+haifa,Haifa,7243,2534,high
+sur,Tyre,7124,2546,high
+saida,Sidon,7066,2621,high
+beirut,Beirut,6994,2666,high
+gebail,Byblos (Jbeil),6988,2696,high
+atrablus,Tripoli (Lebanon),6996,2731,high
+arka,Arqa,6929,2773,high
+antarsus,Tartus,6891,2871,high
+al ladikija,Latakia,6918,2934,high
+antakiu,Antioch (Antakya),6841,2951,high
+dimask,Damascus,6911,2555,high
+baalbek,Baalbek,6771,2571,high
+homs,Homs,6734,2703,high
+adraat,Daraa (Adhriat),6836,2406,high
+salamia,Salamiyah,6594,2841,high
+tadmir,Palmyra (Tadmur),6458,2651,high
+teima,Tayma,6611,2291,high
+kinnesrin,Qinnasrin,6791,2991,high
+balis,Balis,6591,3111,high
+lafkisia,Nicosia,7238,2878,medium
+haleb,Aleppo,6715,3074,medium
+tarsus,Tarsus,6939,3185,high
+adana,Adana,6851,3145,high
+ain zarba,Anazarbus (Ayn Zarba),6803,3094,high
+al masisa,Mopsuestia (al-Massisa),6840,3040,high
+iskanderuna,Iskenderun,6935,3030,high
+selukia,Silifke (Seleucia),7073,3203,high
+harran,Harran,6551,3194,high
+al roha,Edessa (Urfa),6597,3256,high
+manbig,Manbij,6781,3253,high
+samsat,Samosata (Samsat),6746,3401,high
+amid,Diyarbakir (Amid),6613,3471,high
+malatia,Malatya,6943,3476,high
+maras,Kahramanmaras,6934,3391,high
+al hadit,al-Hadath,6851,3334,high
+antalia,Antalya,7113,3231,high
+kunia,Konya,7436,3694,high
+amuria,Amorium,7436,3928,high
+kaisaria,Kayseri,7147,3904,high
+ankira,Ankara,7036,3661,medium
+ladikia,Laodicea on the Lycus,7534,3788,medium
+amasia,Amasya,7056,3774,high
+kastamuni,Kastamonu,7099,3839,high
+al basra,Basra,5904,2578,high
+abadan,Abadan,5823,2503,high
+al kufa,Kufa,6103,2846,high
+al kadesia,al-Qadisiyya,6128,2726,high
+kerbela,Karbala,5963,2836,high
+bagdad,Baghdad,5923,3040,high
+al anbar,al-Anbar,5984,2993,high
+hit,Hit,6123,3041,high
+al madain,Ctesiphon (al-Madain),5828,3000,medium
+okbara,Ukbara,5919,3131,high
+hanikin,Khanaqin,5683,3089,high
+al daskara,Daskara,5761,3041,high
+dainur,Dinawar,5343,3091,high
+karmasin,Kermanshah (Qirmisin),5464,3061,high
+nahauand,Nahavand,5331,2988,high
+al rakka,Raqqa,6481,3111,medium
+kirkisia,Circesium (Qarqisiya),6449,3014,high
+rahbat malik,al-Rahba (Mayadin),6319,3016,high
+al ahuaz,Ahvaz,5501,2673,high
+sus,Susa (Shush),5609,2749,high
+siraz,Shiraz,5258,2446,high
+istahr,Istakhr,5128,2478,high
+kazerun,Kazerun,5359,2406,high
+fasa,Fasa,5309,2561,high
+isbahan,Isfahan,5148,2746,high
+al mosul,Mosul,6218,3369,high
+tekrit,Tikrit,6069,3344,high
+sorra men ra,Samarra,5934,3229,high
+al hadita,Haditha (on the Tigris),5971,3353,medium
+al maraga,Maragheh,5644,3384,high
+tabriz,Tabriz,5516,3364,high
+ardabil,Ardabil,5334,3548,high
+bardaa,Barda,5859,3776,high
+tiflis,Tbilisi,6336,3876,high
+dabil,Dvin,6259,3781,high
+bidlis,Bitlis,6228,3573,high
+halat,Ahlat,6113,3653,high
+miafark,Silvan (Mayyafariqin),6486,3556,high
+kalikala,Erzurum (Qaliqala),6364,3711,high
+salmas,Salmas,5784,3619,high
+hui,Khoy,5859,3681,high
+al samahia,Shamakhi,5703,3943,high
+bab al abuab,Derbent,5327,3988,high
+zangan,Zanjan,5346,3243,high
+abhar,Abhar,5244,3229,high
+mekka,Mecca,6656,1569,high
+iatrib,Medina (Yathrib),6588,1984,high
+gidda,Jeddah,6774,1555,high
+aidab,Aydhab,6988,1564,high
+aila,Aqaba (Ayla),7271,2163,medium
+madjan,Madyan (al-Bad),7121,2146,medium
+al gofa,al-Juhfa,6756,1766,medium
+sohar,Sohar,5366,1591,high
+maskat,Muscat,5549,1788,high
+al katif,Qatif,5899,2214,high
+al ahsa,al-Ahsa (Hofuf),5801,2154,high
+hagar al iemama,Hajr al-Yamama (Riyadh),5929,1823,medium
+negran,Najran,6121,1514,high
+madina al sihr,al-Shihr,5458,1454,high
+aden,Aden,5896,1036,high
+sanaa,Sanaa,5931,1173,high
+zabid,Zabid,6176,1078,high
+damar,Dhamar,5796,1171,high
+tafar,Zafar (Yemen),5789,1248,high
+saada,Saada,6153,1311,high
+tarim,Tarim,5599,1286,high
+marib,Marib,5719,1386,high
+zarang,Zaranj,4203,2307,high
+kain,Qayen,4181,2539,high
+al tabein,Tabas,4216,2628,medium
+sarahs,Sarakhs,4001,2699,high
+maru al sahgan,Merv,4001,2876,high
+kum,Qom,4934,2994,high
+kasan,Kashan,5048,2939,high
+hamadan,Hamadan,5103,3046,high
+iazd,Yazd,4848,2578,high
+al sirgan,Sirjan,4874,2326,high
+al rai,Rayy,4959,3176,high
+bastam,Bastam,4591,3164,high
+asterabad,Gorgan (Astarabad),4828,3313,high
+gorgania,Kunya-Urgench (Gurganj),3863,3333,high
+hazarasb,Hazarasp,3926,3088,high
+buhari,Bukhara,3471,2966,high
+samarkand,Samarkand,3254,2921,medium
+balh,Balkh,3503,2603,high
+herat,Herat,3739,2556,medium
+kat,Kath (Khwarazm),3774,3224,medium
+hogand,Khujand,2949,2878,high
+ahsikat,Akhsikath,2774,2926,high
+baikand,Paykand,3591,3026,high
+gizak,Jizzakh,3271,3123,medium
+kabul,Kabul,3399,1976,medium
+al kandahar,Kandahar,3749,1731,medium
+indarab,Andarab,3549,2291,high
+daibal,Daybul (Banbhore),4901,1388,high
+al mansuria,al-Mansura (Sindh),4709,1508,high
+kanbaia,Khambhat (Cambay),4506,1396,high
+subara,Sopara,4309,1369,high
+sandan,Sanjan,4106,1368,high
+saimur,Chaul (Saymur),3914,1368,medium
+al multan,Multan,4216,1723,high
+bost,Bost (Lashkar Gah),4181,1968,high
+giraft,Jiroft,4889,2118,high
+al taiza,Tiz,5044,1803,medium
+nahruara,Patan (Anhilwara),3613,1594,high
+al kanug,Kannauj,3059,1609,high
+atina,Athens,8746,3728,high
+abidus,Abydos (Dardanelles),8026,3832,high
+kalibolu,Gallipoli (Gelibolu),8016,4008,high
+heraklia,Marmara Ereglisi (Heraclea),7914,4151,high
+rudostu,Tekirdag (Rodosto),7936,4121,high
+salimria,Silivri (Selymbria),7894,4183,high
+ahrida,Ohrid,8883,3794,high
+dimitriana,Demetrias,8436,3788,medium
+anubali,Nafplio,8546,3504,high
+argu,Argos,8504,3448,high
+maliasa,Monemvasia,8421,3346,high
+korint,Corinth,8804,3458,high
+bras,Patras,8814,3418,medium
+astifas,Thebes,8853,3611,high
+salunik,Thessaloniki,8150,3831,high
+kitrus,Kitros (Pydna),8208,3808,medium
+larisa,Larissa,8764,3847,medium
+al kostantina,Constantinople (Istanbul),7873,4341,high
+adirnuboli,Edirne (Adrianople),8206,4281,high
+filibus,Plovdiv (Philippopolis),8046,4431,high
+arkadiuboli,Luleburgaz (Arcadiopolis),8063,4278,high
+bizi,Vize,7983,4468,high
+agatubolus,Ahtopol (Agathopolis),7771,4621,high
+mesinus,Nesebar (Mesembria),8074,4739,medium
+darsira,Silistra (Dristra),8028,4831,medium
+barsklafa,Preslav,7819,4788,medium
+sinuboli,Sinop,6926,4319,high
+heraklia,Karadeniz Eregli (Heraclea Pontica),7414,4389,high
+samastru,Amasra (Amastris),7181,4386,high
+barnas,Varna,7406,4621,high
+sizuboli,Sozopol,7656,4661,high
+karsuna,Chersonesus (Kherson),6746,4716,medium
+kiau,Kyiv,6856,4774,medium
+gana,Koumbi Saleh (capital of Ghana),11286,1054,medium
+belgraba,Belgrade,10078,4521,high
+neitram,Nitra,9794,4689,high
+akrakal,Krakow,9766,4981,medium
+genasia,Gniezno,9374,5026,medium

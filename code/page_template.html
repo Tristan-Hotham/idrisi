@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Al-Idrisi's World</title>
+<meta name="description" content="Al-Idrisi's world map of 1154, made in Palermo for King Roger II of Sicily and drawn with south at the top, set beside a modern map: {{source.n|int}} towns read on Konrad Miller's 1928 reconstruction, how far each is out, the seven climates, the Nile, Britain, and a comparison with the Hereford Mappa Mundi.">
+<meta property="og:title" content="Al-Idrisi's world: the map made for Roger II, set against a modern one">
+<meta property="og:description" content="South at the top, Mecca near the middle, Sicily drawn biggest of all. {{source.n|int}} towns on the 1154 map of al-Idrisi, measured against reality: its directions are right to a median {{pairs.median_brg_err|int}} degrees.">
+<meta property="og:image" content="https://maps.tristanhotham.com/idrisi/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/idrisi/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+/* Palermo, 1154: paper, iron-gall ink, lapis for the sea, saffron and the vermilion of the climate lines. */
+:root{
+  --bg:#F6F1E6; --panel:#EDE4D0; --fg:#1F1D1A; --muted:#67615A; --rule:#DED3BC; --card:#FFFBF2; --border:#CDBFA3;
+  --lapis:#23468C; --saffron:#C98A12; --red:#B4372A; --green:#2E7D5B; --land:#E6DDC8; --sea:#E7EDEF; --ink:#2A3550;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#14130F; --panel:#1E1C17; --fg:#EFE9DD; --muted:#AAA294; --rule:#332F27; --card:#1A1813; --border:#4A443A;
+  --lapis:#86A6EA; --saffron:#E8B54F; --red:#F07B66; --green:#5CC49F; --land:#2A2720; --sea:#13171B; --ink:#B5C1DE; color-scheme:dark; --icofilter:invert(1)}}
+:root[data-theme="dark"]{
+  --bg:#14130F; --panel:#1E1C17; --fg:#EFE9DD; --muted:#AAA294; --rule:#332F27; --card:#1A1813; --border:#4A443A;
+  --lapis:#86A6EA; --saffron:#E8B54F; --red:#F07B66; --green:#5CC49F; --land:#2A2720; --sea:#13171B; --ink:#B5C1DE; color-scheme:dark; --icofilter:invert(1)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1240px,calc(100vw - 32px));margin-left:calc((100% - min(1240px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--saffron);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--lapis);color:#fff;padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(44px,11vw,86px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 span{color:var(--lapis)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block;color:var(--fg)}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:58ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--lapis);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--lapis)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.a{color:var(--lapis)} .stats b.b{color:var(--red)} .stats b.c{color:var(--green)} .stats b.d{color:var(--saffron)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:300px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.turn{border-color:var(--lapis);color:var(--lapis)}
+.btn.turn[aria-pressed="true"]{background:var(--lapis);color:#fff}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1003;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.twin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:860px){.twin{grid-template-columns:1fr}}
+.mapcap{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;gap:8px;align-items:end}
+.mapcap b{color:var(--fg);font-weight:500}
+.lmap{height:600px;border:1px solid var(--border);background:var(--sea);border-radius:2px;position:relative;overflow:hidden}
+#mmap{background:#E8DCBE}
+@media (max-width:860px){.lmap{height:min(66vh,520px)}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 14px 10px;font:400 13px/1.5 var(--mono);margin-top:12px;min-height:90px}
+.side .big{font:800 26px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{border-collapse:collapse;margin:6px 0}
+.side td{padding:3px 12px 3px 0;vertical-align:top}
+.side td:first-child{color:var(--muted);white-space:nowrap}
+.chip{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.maplibregl-map{font:400 12px/1.4 var(--mono)}
+.maplibregl-ctrl-attrib{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.maplibregl-ctrl-attrib a{color:var(--fg)}
+.maplibregl-ctrl-group{background:var(--card)}
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:var(--icofilter,none)}
+.lyrWrap{position:absolute;top:10px;left:10px;z-index:3}
+.lyrBtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:9px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:260px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:min(60vh,470px);overflow:auto}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .hd:first-child{border-top:0;padding-top:0;margin-top:0}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.pinL{font:600 12px/1.1 var(--mono);color:var(--fg);background:color-mix(in srgb,var(--card) 88%,transparent);border:1px solid var(--border);padding:3px 6px;border-radius:2px;white-space:nowrap;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 13px var(--mono);color:var(--muted);z-index:1;text-align:center;padding:20px}
+.fallback{position:absolute;inset:0;width:100%;height:100%}
+.fbnote{position:absolute;left:10px;bottom:10px;right:10px;font:400 12px/1.4 var(--mono);color:var(--muted);background:color-mix(in srgb,var(--card) 92%,transparent);padding:6px 9px;border:1px solid var(--border);border-radius:3px;pointer-events:none}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px;align-items:center}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:11px;height:11px;margin-right:6px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.legend i.ln{height:0;border:0;border-top:2px solid;width:18px;border-radius:0}
+.legend i.dl{height:0;border:0;border-top:2px dashed;width:18px;border-radius:0}
+.legend i.sq{border-radius:2px;width:14px}
+.legend i.ramp{width:90px;height:10px;border-radius:2px;background:linear-gradient(90deg,#1F7A8C,#E7C35A,#B4372A)}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--lapis);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+blockquote{font-style:italic;margin:18px 0;padding-left:16px;border-left:3px solid var(--saffron);color:var(--fg)}
+table.tbl{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--mono)}
+table.tbl th{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 6px 6px 0;border-bottom:2px solid var(--fg);white-space:nowrap;position:sticky;top:0;background:var(--card)}
+table.tbl td{padding:6px 6px 6px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.tbl td.r,table.tbl th.r{text-align:right;white-space:nowrap}
+table.tbl tr[data-k]{cursor:pointer}
+table.tbl tr[data-k]:hover td{background:var(--panel)}
+.tablebox{max-height:460px;overflow:auto;border:1px solid var(--border);background:var(--card);padding:0 10px}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--lapis);border-color:var(--lapis);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+[hidden]{display:none!important}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>History</span><span>Palermo, 1154</span></div>
+<header class="hero">
+  <h1>Al-Idrisi's <span>World</span></h1>
+  <svg class="mark" viewBox="0 0 120 120" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">In 1154 a Muslim scholar at the Norman court of Sicily finished a map of the known world for King Roger II. It has south at the top, seven climates running across it like shelves, and some {{source.n|int}} towns I could read and place. I set it beside a modern map to see where it is right, where it bends, and how it compares with the Christian Hereford map drawn about {{source.years_apart|int}} years later.</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Sources: Konrad Miller's 1928 reconstruction; Dozy and de Goeje (1866); al-Thurayya; Pleiades; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="a">{{source.n|int}}</b><span>towns read on the map and matched to real places, from Lisbon to Kannauj</span></div>
+  <div><b class="b">{{pairs.median_brg_err|int}}°</b><span>median error in direction between pairs of towns, once the map is turned north up</span></div>
+  <div><b class="c">{{sicily.median_local_km|int}} km</b><span>median local error in Sicily, the most faithful region; {{groups.Asia beyond the Euphrates.median_local_km|int}} km in Asia beyond the Euphrates</span></div>
+  <div><b class="d">{{regions.Sicily and Malta.stretch|f2}}×</b><span>the scale at which Sicily, Roger's own island, is drawn: the biggest of any region</span></div>
+</div>
+
+<p class="lede">The map is upside down, at least to us. Al-Idrisi, a scholar born in Ceuta, put south at the top, as many mapmakers in the Islamic world did, so Arabia and Africa sit above the Mediterranean and Europe hangs underneath. He drew it in Palermo for Roger II, the Norman king of Sicily, and wrote a long book to go with it, the Book of Roger, which walks across the known world in seventy sections: seven climates, bands of latitude from the equator northwards, each cut into ten pieces from west to east. Laid side by side, the sections make one great rectangle of the world, from the Atlantic to China.</p>
+<p>The original silver map is lost. In 1928 the German scholar Konrad Miller rebuilt it from the manuscripts as one sheet, with every name transcribed. I read {{source.n|int}} of its towns on Miller's reconstruction, {{source.high|int}} clearly and {{source.medium|int}} with some doubt, found where each one really is, and measured how the map bends the world. Click a town on either map to see it on the other, or turn the old map north up.</p>
+
+<h2><span class="n">01 · Two maps</span>The world from Palermo and the real one</h2>
+<div class="bleed" id="atlas">
+<div class="controls"><div class="scrollrow" id="viewRow"><span class="ctl-l">Old map</span></div></div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Search a town (Palermo, Cordoba, Baghdad, London...)" aria-label="Search a town" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+</div>
+<div class="controls"><div class="scrollrow" id="focusRow"><span class="ctl-l">Go to</span></div></div>
+<div class="twin">
+  <div><div class="mapcap"><span><b>Al-Idrisi, 1154</b> · <span id="orient">south at the top, as drawn</span></span><span>Miller's 1928 reconstruction</span></div>
+    <div id="mmap" class="lmap" data-fullscreen-map role="application" aria-label="Al-Idrisi's world map in Konrad Miller's reconstruction, zoomable, with the towns I located marked"><div class="loading">Loading the map of 1154...</div></div></div>
+  <div><div class="mapcap"><span><b>The same towns today</b> · north at the top</span><span>Natural Earth</span></div>
+    <div id="wmap" class="lmap" data-fullscreen-map role="application" aria-label="Modern map of the towns identified on al-Idrisi's map"><div class="loading">Loading the modern map...</div></div></div>
+</div>
+<div class="legend" id="legend"></div>
+<div class="side" id="side" aria-live="polite"></div>
+<p class="src">Left: Konrad Miller's 1928 reconstruction of the map (public domain), south at the top as drawn; the Turn north up button rotates it. Dots: the {{source.n|int}} towns I located, coloured by region, or by local error (Map layers). Right: the same towns where they really are. Map layers on the left add the modern grid of latitude and longitude, bent to where the map would put it; on the right, the climate lines of the old map laid on the globe, an arrow from each town to where the old map puts it, and al-Idrisi's own road distances. Sources: Miller (1928); al-Thurayya (CC BY 4.0); Pleiades (CC BY 3.0); Natural Earth.</p>
+</div>
+
+<h2><span class="n">02 · Seven climates</span>A world on shelves</h2>
+<p>Al-Idrisi's world is a grid. The red lines that run straight across the map divide it into the seven climates of Greek and Islamic geography, bands of latitude from the equator in the south to the cold north, and each climate is drawn the same height, about {{climate_summary.height_px|int}} pixels on Miller's sheet. The climates work: the median latitude of the towns rises from climate to climate without a break, from {{climates.1.lat_median|f1}}° in the first, with Aden, Sanaa and Aswan, to {{climates.6.lat_median|f1}}° in the sixth, with Paris, London and Constantinople, and {{climates.7.lat_median|f1}}° in the seventh, where only three English towns are legible.</p>
+<p>But the shelves are not the same depth in reality. The latitudes that best separate the towns of one climate from the next fall at about {{climate_summary.bounds.0|f1}}°, {{climate_summary.bounds.1|f1}}°, {{climate_summary.bounds.2|f1}}°, {{climate_summary.bounds.3|f1}}°, {{climate_summary.bounds.4|f1}}° and {{climate_summary.bounds.5|f1}}° north. The second climate covers {{climate_summary.south_width|f1}} degrees of latitude; the middle and northern ones an average of {{climate_summary.north_mid_width|f1}}. So the south is squeezed and the Mediterranean and Europe, where the towns are thick, are spread out. By those boundaries {{climate_summary.right_climate_pct|int}}% of towns sit in the right climate and every one is within one climate of it.</p>
+<div class="figure"><p class="fig-h">The real latitude of the towns in each climate</p><p class="fig-sub">Each dot is a located town, placed at its true latitude (across) in the climate the map puts it in (up). Dashed lines: the latitudes that best separate neighbouring climates. Hover a dot.</p><div class="chart" id="climChart"></div></div>
+<p>Within each climate the map behaves like a rectangular grid of degrees. Fitted as a whole, it draws a degree of longitude {{affine.lon_lat_ratio|f2}} times as long as a degree of latitude, as if the whole world lay at about {{affine.true_scale_lat|int}}° north, and the fit puts the median town {{affine.median_resid_km|int}} km from where it is. Longitude is easier to get right than latitude here: the fit explains {{affine.r2_lon|f2}} of the spread in longitude and {{affine.r2_lat|f2}} in latitude, because the climates squeeze and stretch the north to south direction.</p>
+
+<h2><span class="n">03 · Direction and distance</span>Roughly right everywhere, best at home</h2>
+<p>Turned north up, the map points the right way. Across all {{pairs.n|int}} pairs of located towns at least 100 km apart, the median error in direction is {{pairs.median_brg_err|int}} degrees and {{pairs.within45_pct|int}}% are within 45 degrees. Distances keep their order too: the rank correlation between distance on the map and on the ground is {{pairs.spearman_dist|f2}}.</p>
+<p>Where it goes wrong is a matter of neighbourhoods. For each town I took its eight nearest real neighbours, fitted the best simple stretch and turn from the map to the ground on them alone, and asked where they put the town. The median miss is {{local.median_km|int}} km, and {{local.within100_pct|int}}% are within 100 km. But it varies a great deal. Sicily is the most faithful region on the map, with a median local error of {{regions.Sicily and Malta.median_local_km|int}} km, followed by {{rank_local.1|raw}} ({{regions.Syria and Palestine.median_local_km|int}} km), {{rank_local.2|raw}} and {{rank_local.3|raw}}. The edges are worst: Arabia ({{regions.Arabia.median_local_km|int}} km), central and eastern Europe ({{regions.Central and Eastern Europe.median_local_km|int}} km) and Sind and India ({{regions.Sind and India.median_local_km|int}} km).</p>
+<div class="figure"><p class="fig-h">How faithfully each region is drawn</p><p class="fig-sub">Median local error: how far each town is from where its eight nearest neighbours on the map say it should be. Regions with at least five located towns. Hover a bar; click to see the region on both maps.</p><div class="chart" id="regChart"></div></div>
+<div class="pull">The Mediterranean world is drawn about twice as faithfully as Asia beyond the Euphrates: a median local error of {{groups.Mediterranean.median_local_km|int}} km against {{groups.Asia beyond the Euphrates.median_local_km|int}} km.</div>
+<p>Northern Europe sits in between, at {{groups.Northern Europe.median_local_km|int}} km. That fits the way al-Idrisi says, in his preface, that the work was done: by gathering the reports of travellers who came to Roger's court. The coasts that ships from Palermo sailed were described by many of them; the far east and the far north by few.</p>
+<div class="figure"><p class="fig-h">The located towns, region by region</p><p class="fig-sub">Number of towns, median local error, median error in direction between pairs of towns in the region, and the scale at which the region is drawn relative to the map as a whole (1 = average). Click a row to see the region on both maps.</p><div class="tablebox" style="max-height:none"><table class="tbl" id="regTable"></table></div></div>
+
+<h2><span class="n">04 · Sicily</span>The king's island, drawn biggest</h2>
+<p>Sicily is not only the best drawn region. It is also the biggest. Measured the same way as in my study of the Hereford map, comparing distances between pairs of towns on the map and on the ground against the map's average, Sicily is drawn at {{regions.Sicily and Malta.stretch|f2}} times the average scale, more than any other region: Greece and the Balkans {{regions.Greece and the Balkans.stretch|f2}}, Italy and England {{regions.Italy and Corsica.stretch|f2}}, Syria and Palestine {{regions.Syria and Palestine.stretch|f2}}, and at the other end Morocco and Algeria {{regions.Morocco and Algeria.stretch|f2}} and Arabia {{regions.Arabia.stretch|f2}}. The rectangular grid alone would leave Sicily at {{regions.Sicily and Malta.grid_stretch|f2}}, so the enlargement is the mapmaker's choice. I read {{sicily.n|int}} towns on it, from Palermo, Messina and Syracuse to Butera and Caronia, more than on all of England and central Europe together.</p>
+<p>Its one fault is a turn. The best local fit rotates Sicily by about {{regions.Sicily and Malta.rotation|abs}} degrees anticlockwise, so its pairs of towns are off in direction by a median {{regions.Sicily and Malta.median_brg_err|int}} degrees, one of the larger figures on the map, while their spacing is the most accurate. Al-Idrisi had the island's shape right and set it slightly askew.</p>
+
+<h2><span class="n">05 · The Nile</span>From the Mountains of the Moon</h2>
+<p>At the top of the map, beyond the equator, are the Mountains of the Moon, and below them the lakes from which the Nile flows north across the whole height of the map to the delta. The text is precise. The source of the Nile, it says, is in the Mountains of the Moon, "whose beginning is sixteen degrees beyond the equinoctial line", from which ten springs feed two lakes, whose rivers join in a third, very great lake. It also quotes Qudama that the Nile runs {{nile.text_length_miles|int}} miles from source to sea.</p>
+<p>The map does not show sixteen degrees. Miller's reconstruction puts the mountains only about {{nile.moon_px_south_of_equator|int}} pixels beyond the equator line, a sixth of the height of a climate. And {{nile.text_length_miles|int}} miles, at about 2 km to the Arab mile, is some {{routes.nile_km_at_lo|int}} to {{routes.nile_km_at_hi|int}} km, against about {{nile.nile_km_real|int}} km for the real river. Where the Nile runs through towns, though, the map is good. Fitted on the whole map, Aswan comes out at {{nile.aswan_fit_lat|f1}}° (really {{nile.aswan_lat|f1}}°), Alexandria at {{nile.alexandria_fit_lat|f1}}° (really {{nile.alexandria_lat|f1}}°), and Egypt spans {{nile.egypt_lat_span_fit|f1}} degrees of latitude on the map against {{nile.egypt_lat_span_real|f1}} in reality.</p>
+
+<h2><span class="n">06 · Britain</span>An island at the edge of the seventh climate</h2>
+<p>England, "the island of Inkiltara", sits in the far north west of the map, astride the boundary between the sixth and seventh climates: London, Dover and Hastings in the sixth, Lincoln, Grimsby and Salisbury in the seventh. I could read {{britain.n|int}} English towns, too few for firm figures, but they tell a clear story. North to south, England is in the right place: on the map as a whole its towns come out, at the median, within a tenth of a degree of their true latitude. East to west it is pushed {{britain.lon_shift|f1}} degrees too far east, and the island is turned: the best local fit rotates it about {{regions.England.rotation|int}} degrees clockwise, so that Paris, really {{britain.london_paris_brg_true|int}} degrees from London, is drawn at {{britain.london_paris_brg_map|int}} degrees, nearly due south.</p>
+<p>Measured from Jerusalem, as in the Hereford study, the English towns point the right way to within a median {{jerusalem.england_brg_err|int}} degrees on al-Idrisi's map, against {{hereford.britain_brg_err|int}} for the British towns on the Hereford map, which was made in England. Hereford gives Britain {{hereford.britain_names_pct|f1}}% of its names and draws it at {{hereford.britain_stretch|f1}} times its average scale; al-Idrisi draws England at {{regions.England.stretch|f2}} times, more than France ({{regions.France and the Low Countries.stretch|f2}}) but less than Sicily.</p>
+
+<h2><span class="n">07 · Distances in the book</span>Miles, days and the road</h2>
+<p>The Book of Roger is full of distances: so many miles from one town to the next, so many days' march. Dozy and de Goeje's 1866 edition of its chapters on North Africa and Spain gives the text in Arabic and French. I took {{routes.n|int}} distances between towns I could identify, {{routes.n_miles|int}} in miles and {{routes.n_days|int}} in day stages, and checked each against the scan line by line.</p>
+<p>They are consistent. The stated miles and the straight line distances rise together (rank correlation {{routes.spearman_miles|f2}}), at a median of {{routes.median_km_per_mile|f2}} km of straight line per stated mile, with half the routes between {{routes.q1_km_per_mile|f2}} and {{routes.q3_km_per_mile|f2}}. The Arab mile is usually put at about 2 km, so either the roads ran between a third and two fifths longer than the straight line, or the mile in these itineraries was shorter. A day stage is a median {{routes.median_km_per_day|int}} km in a straight line, and in all {{routes.n_both|int}} routes that give both, a day is about {{routes.median_miles_per_day|int}} miles.</p>
+<div class="figure"><p class="fig-h">Al-Idrisi's road distances against the straight line</p><p class="fig-sub">Each dot is a distance stated in the text between two towns (across, in Arab miles) against the great circle distance between them today (up). Both scales logarithmic. Hover a dot.</p><div class="chart" id="routeChart"></div></div>
+<p>The map seems to follow the book. For the {{routes.n_on_map|int}} routes in miles whose two ends I located on the map, distance on the map tracks the stated miles (rank correlation {{routes.spearman_map_miles|f2}}) more closely than it tracks the real distance ({{routes.spearman_map_km|f2}}). It is a small sample, but it is what you would expect of a map put together from itineraries.</p>
+
+<h2><span class="n">08 · Two worlds</span>Palermo and Hereford</h2>
+<p>About {{source.years_apart|int}} years after al-Idrisi, a clergyman in Hereford drew the largest medieval map of the world that survives, with east at the top and Jerusalem at its centre. I measured it the same way in an <a href="https://maps.tristanhotham.com/mappa-mundi/">earlier study</a>. Measured from Jerusalem, with the best rotation and scaling, al-Idrisi's map explains {{jerusalem.sim_r2|f2}} of the spread of real positions, against {{hereford.fit_r2|f2}} for Hereford; the median town lands {{jerusalem.sim_median_disp_km|int}} km from where it is, against {{hereford.median_disp_km|int}} km. Directions from Jerusalem are right to a median {{jerusalem.median_brg_err|int}} degrees ({{hereford.bearing_median_err|int}} on Hereford), with {{jerusalem.within45_pct|int}}% within 45 degrees ({{hereford.bearing_within45_pct|int}}%).</p>
+<div class="figure"><p class="fig-h">The same tests on both maps</p><p class="fig-sub">Similarity fit about Jerusalem, as in the Hereford study: share of the spread of real positions explained, median distance of a town from where the fitted map puts it, median error in direction from Jerusalem, and share within 45 degrees. Al-Idrisi: {{jerusalem.n|int}} towns; Hereford: {{hereford.located_real|int}}.</p><div class="chart" id="cmpChart"></div></div>
+<p>The comparison is not quite like for like. The Hereford sample is smaller and full of classical names copied from Roman books; al-Idrisi's is larger and mostly towns of his own century, many of them on trade routes. But the difference in purpose shows. Hereford is a picture of history and Scripture that spends its space on the Holy Land, drawn {{hereford.holyland_stretch|f1}} times its average scale. Al-Idrisi's map is a geographer's: Syria and Palestine get {{regions.Syria and Palestine.stretch|f2}} times, Mecca sits close to the middle of the map, in the second climate, while Arabia is drawn at the smallest scale of any region ({{regions.Arabia.stretch|f2}}), and the extra space goes to the island where the map was made. Both maps spend most on home.</p>
+
+<h2><span class="n">09 · How I did this</span>Methods and caveats</h2>
+<p><b>The map.</b> Konrad Miller's 1928 reconstruction, from Wikimedia Commons (public domain), {{source.img_w|int}} by {{source.img_h|int}} pixels. It is a modern redrawing from the manuscripts, not the original, and Miller added the transcriptions, so every position here is a position on Miller's sheet. I read {{source.n|int}} town labels by eye, {{source.high|int}} clearly and {{source.medium|int}} with some doubt, and recorded the pixel of each town's symbol. Miller drew towns as small brown discs; I found {{source.discs|int}} of them automatically and snapped {{source.snapped|int}} of my readings ({{source.snapped_pct|int}}%) to the nearest disc, a median {{source.snap_median_px|f1}} pixels away. The others I checked by eye.</p>
+<p><b>Real places.</b> I gave each town a modern position and checked it against three gazetteers: al-Thurayya, which maps the towns and roads of the early Islamic world, Pleiades for ancient places, and Natural Earth for modern towns. {{source.checked|int}} of the {{source.n|int}} ({{source.checked_pct|int}}%) match a gazetteer entry of the same name, a median {{source.check_median_km|f1}} km from my position; the rest are small towns the gazetteers do not list. I left out names I could not identify with confidence.</p>
+<p><b>Measures.</b> All measurements are made with the map turned north up. The global fit is the best affine map from map position to longitude and latitude. Local error, direction between pairs and scale by region are defined in the paper; each region needs five located towns to be scored. The climate boundaries are the latitudes that best separate the towns of neighbouring climates. The Hereford comparison repeats exactly the similarity fit and Jerusalem bearings of that study. The distances come from Dozy and de Goeje (1866), read in the Internet Archive's text and checked against the line they come from.</p>
+<p><b>What this is not.</b> A sample of legible towns, not the whole map: rivers, mountains and peoples are left out, and coverage is thin where labels are few or unreadable, in India and central Asia, eastern Europe and Africa south of the Sahara ({{regions.Sind and India.n|int}}, {{regions.Central and Eastern Europe.n|int}} and {{regions.West Africa.n|int}} towns). The reconstruction is Miller's: where his redrawing differs from the manuscripts, so does my measurement. With clear readings only ({{high_only.n|int}} towns) the median local error is {{high_only.median_local_km|int}} km and the median global miss {{high_only.median_resid_km|int}} km, close to the figures for all towns.</p>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>Miller, K. (1928) Charta Rogeriana, Weltkarte des Idrisi vom Jahr 1154. Stuttgart. Wikimedia Commons, "Tabula Rogeriana 1929 copy by Konrad Miller.jpg", public domain.</li>
+<li>Dozy, R. and de Goeje, M. J. (1866) Description de l'Afrique et de l'Espagne par Edrisi. Leiden: Brill. Internet Archive scan, public domain.</li>
+<li>al-Thurayya Gazetteer, M. Seydi and M. Romanov, from G. Cornu's Atlas du monde arabo-islamique (1983), CC BY 4.0.</li>
+<li>Pleiades: a gazetteer of past places, version {{source.pleiades_version|raw}}, CC BY 3.0.</li>
+<li>Natural Earth outlines and towns (public domain). Optional shaded relief tiles © Esri.</li>
+<li>Hereford comparison: my study of the Hereford Mappa Mundi (2026).</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23882607">Read the paper</a><a href="https://github.com/Tristan-Hotham/idrisi">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/idrisi/">Blog post</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Al-Idrisi's world: the map made for Roger II of Sicily in 1154, set against a modern map. Zenodo. <a href="https://doi.org/10.5281/zenodo.23882607">https://doi.org/10.5281/zenodo.23882607</a></p>
+<p>Licence: code MIT; text, figures and derived data CC BY 4.0. Miller's reconstruction and the 1866 edition are public domain; al-Thurayya data CC BY 4.0; Pleiades data CC BY 3.0.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+const R = /*RESULTS*/;
+const SITE = /*SITE*/;
+const WORLD = /*WORLD*/;
+const fmt = n => n == null || n === "" ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+document.addEventListener("click", e => { if (!e.target.closest("svg")) hideTip(); });
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const small = () => innerWidth < 860;
+const LC = {}; SITE.loc_cols.forEach((k, i) => LC[k] = i);
+const RC = {}; SITE.route_cols.forEach((k, i) => RC[k] = i);
+const LOC = SITE.located, IMG = SITE.img, REGS = SITE.regions.map(r => r[0]), RCOL = SITE.regions.map(r => r[1]);
+const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII"];
+
+/* hero mark: the climates as shelves, south at the top, with the Nile running down from the Mountains of the Moon */
+(function () {
+  const g = document.getElementById("heroMark");
+  el("rect", { x: 8, y: 14, width: 104, height: 92, fill: "none", stroke: "currentColor", "stroke-width": 3 }, g);
+  for (let k = 1; k < 7; k++) el("line", { x1: 8, x2: 112, y1: 14 + k * 92 / 7, y2: 14 + k * 92 / 7, stroke: "#B4372A", "stroke-width": 1.6 }, g);
+  el("path", { d: "M58 18 C 60 40, 52 55, 60 72 S 58 96, 62 104", fill: "none", stroke: "#2E7D5B", "stroke-width": 3.2 }, g);
+  el("ellipse", { cx: 60, cy: 64, rx: 40, ry: 10, fill: "#23468C", opacity: .55 }, g);
+  el("circle", { cx: 70, cy: 60, r: 4.5, fill: "#C98A12" }, g);
+})();
+
+/* pixel on the image as drawn -> pseudo coordinates on Web Mercator (the tiles' frame) */
+const px2ll = (x, y) => { const X = IMG.tx0 + x, Y = IMG.ty0 + y; const lon = X / IMG.tworld * 360 - 180, n = Math.PI - 2 * Math.PI * Y / IMG.tworld; return [lon, Math.atan(Math.sinh(n)) * 180 / Math.PI]; };
+const MB = [px2ll(0, IMG.h), px2ll(IMG.w, 0)];
+
+/* ---------- state ---------- */
+const S = { sel: null, north: false, colour: "region" };
+let FB = null;
+const LYDEF = { pts: true, grid: false, arrows: false, climes: true, routes: false, relief: false, reliefK: 35, labels: true };
+const LY = { ...LYDEF };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("idrisi_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("idrisi_layers", JSON.stringify(LY)); } catch (e) {} };
+const ERRSTOPS = [[0, "#1F7A8C"], [60, "#7FB3A0"], [120, "#E7C35A"], [250, "#D9792F"], [500, "#B4372A"]];
+const errCol = v => { for (let i = 1; i < ERRSTOPS.length; i++) if (v <= ERRSTOPS[i][0]) return ERRSTOPS[i][1]; return ERRSTOPS[ERRSTOPS.length - 1][1]; };
+const colExpr = () => S.colour === "region" ? ["match", ["get", "r"], ...REGS.flatMap((r, i) => [i, RCOL[i]]), "#888"]
+  : ["interpolate", ["linear"], ["get", "e"], ...ERRSTOPS.flat()];
+function pal() { const d = isDark(); return { sea: css("--sea"), land: css("--land"), border: d ? "#3A3830" : "#FFFFFF", panel: "#E8DCBE" }; }
+
+function locFeatures(geo) {
+  return { type: "FeatureCollection", features: LOC.map(r => ({ type: "Feature", id: r[LC.i], properties: { i: r[LC.i], r: r[LC.reg], e: r[LC.local_km], n: (r[LC.ident] || "").split(" (")[0] },
+    geometry: { type: "Point", coordinates: geo ? [r[LC.lon], r[LC.lat]] : px2ll(r[LC.x], r[LC.y]) } })) };
+}
+const lineFC = (lines, toLL) => ({ type: "FeatureCollection", features: lines.map(l => ({ type: "Feature", properties: { k: l.kind || "", v: l.v ?? l.k }, geometry: { type: "LineString", coordinates: l.pts.map(toLL) } })) });
+function arrowFeatures() { return { type: "FeatureCollection", features: LOC.map(r => ({ type: "Feature", properties: { r: r[LC.reg], e: r[LC.local_km] }, geometry: { type: "LineString", coordinates: [[r[LC.lon], r[LC.lat]], [r[LC.fit_lon], r[LC.fit_lat]]] } })) }; }
+function routeFeatures() { return { type: "FeatureCollection", features: SITE.routes.map((r, i) => ({ type: "Feature", properties: { i, m: r[RC.miles] ? 1 : 0, k: r[RC.km_per_mile] ?? 0 }, geometry: { type: "LineString", coordinates: [[r[RC.from_lon], r[RC.from_lat]], [r[RC.to_lon], r[RC.to_lat]]] } })) }; }
+function climeLabels() { return { type: "FeatureCollection", features: SITE.climates.map(c => ({ type: "Feature", properties: { t: "Climate " + ROMAN[c.climate] }, geometry: { type: "Point", coordinates: px2ll(150, (c.row_south + c.row_north) / 2) } })) }; }
+
+/* ---------- the two maps ---------- */
+let mm = null, wm = null, mReady = false, wReady = false, pins = [];
+function startMaps() {
+  if (typeof maplibregl === "undefined") { fallback(); return; }
+  const P = pal();
+  try {
+    mm = new maplibregl.Map({ container: "mmap", bounds: MB, fitBoundsOptions: { padding: 4 }, minZoom: 0, maxZoom: 9, renderWorldCopies: false, attributionControl: { compact: true, customAttribution: "Map: K. Miller 1928 (public domain)" }, dragRotate: false, pitchWithRotate: false, touchPitch: false, fadeDuration: 0,
+      style: { version: 8, sources: {
+        tiles: { type: "raster", tiles: [new URL("img/tiles/{z}/{x}/{y}.webp", location.href).href.replace("%7Bz%7D", "{z}").replace("%7Bx%7D", "{x}").replace("%7By%7D", "{y}")], tileSize: 256, minzoom: 1, maxzoom: IMG.tz, bounds: [MB[0][0], MB[0][1], MB[1][0], MB[1][1]] },
+        pts: { type: "geojson", data: locFeatures(false) }, grid: { type: "geojson", data: lineFC(SITE.graticule, p => px2ll(p[0], p[1])) },
+        sel: { type: "geojson", data: { type: "FeatureCollection", features: [] } } },
+        layers: [{ id: "bg", type: "background", paint: { "background-color": P.panel } },
+          { id: "tiles", type: "raster", source: "tiles", paint: { "raster-fade-duration": 0 } },
+          { id: "grid", type: "line", source: "grid", layout: { visibility: "none", "line-cap": "round" }, paint: { "line-color": "#23468C", "line-width": ["interpolate", ["linear"], ["zoom"], 2, 1.2, 7, 3], "line-opacity": .8, "line-dasharray": [3, 2] } },
+          { id: "pts", type: "circle", source: "pts", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2.4, 2, 2.8, 5, 5, 8, 9], "circle-color": colExpr(), "circle-stroke-color": "#FFFFFF", "circle-stroke-width": 1.2, "circle-opacity": .92 } },
+          { id: "sel", type: "circle", source: "sel", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 9, 6, 16], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#B4372A", "circle-stroke-width": 3 } }] } });
+    mm.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+    mm.on("error", e => console.warn("mm error", e && e.error && e.error.message));
+    mm.on("load", () => { mReady = true; document.querySelector("#mmap .loading")?.remove(); applyLayers(); bindClicks(mm, "pts"); drawSel(); });
+    wm = new maplibregl.Map({ container: "wmap", center: small() ? [28, 34] : [30, 36], zoom: small() ? 1.1 : 1.6, minZoom: .6, maxZoom: 9, renderWorldCopies: false, attributionControl: { compact: true }, dragRotate: false, pitchWithRotate: false, touchPitch: false, fadeDuration: 0,
+      style: { version: 8, sources: {
+        world: { type: "geojson", data: WORLD, attribution: "Natural Earth" },
+        relief: { type: "raster", tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"], tileSize: 256, maxzoom: 13, attribution: "Relief: Esri" },
+        clim: { type: "geojson", data: lineFC(SITE.climate_lines, p => p) }, arr: { type: "geojson", data: arrowFeatures() },
+        routes: { type: "geojson", data: routeFeatures(), attribution: "Distances: Dozy and de Goeje 1866" },
+        pts: { type: "geojson", data: locFeatures(true), attribution: "Gazetteers: al-Thurayya (CC BY 4.0), Pleiades (CC BY 3.0)" },
+        sel: { type: "geojson", data: { type: "FeatureCollection", features: [] } } },
+        layers: [{ id: "bg", type: "background", paint: { "background-color": P.sea } },
+          { id: "land", type: "fill", source: "world", paint: { "fill-color": P.land } },
+          { id: "relief", type: "raster", source: "relief", layout: { visibility: "none" }, paint: { "raster-opacity": LY.reliefK / 100 } },
+          { id: "borders", type: "line", source: "world", paint: { "line-color": P.border, "line-width": .6 } },
+          { id: "clim", type: "line", source: "clim", paint: { "line-color": "#B4372A", "line-width": ["match", ["get", "v"], 0, 2.4, 1.6], "line-opacity": .75, "line-dasharray": [4, 2] } },
+          { id: "routes", type: "line", source: "routes", layout: { visibility: "none", "line-cap": "round" }, paint: { "line-color": ["case", ["==", ["get", "m"], 1], "#23468C", "#C98A12"], "line-width": 2, "line-opacity": .8 } },
+          { id: "arr", type: "line", source: "arr", layout: { visibility: "none", "line-cap": "round" }, paint: { "line-color": isDark() ? "#9A9488" : "#7D776D", "line-width": 1.1, "line-opacity": .75 } },
+          { id: "pts", type: "circle", source: "pts", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2.8, 6, 7.5], "circle-color": colExpr(), "circle-stroke-color": "#FFFFFF", "circle-stroke-width": 1.1 } },
+          { id: "sel", type: "circle", source: "sel", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 9, 6, 15], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#B4372A", "circle-stroke-width": 3 } }] } });
+    wm.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+    wm.on("error", () => { /* offline relief tiles: the plain base map still works */ });
+    wm.on("load", () => { wReady = true; document.querySelector("#wmap .loading")?.remove(); applyLayers(); bindClicks(wm, "pts"); drawSel(); });
+    window.mm = mm; window.wm = wm;
+    layersControl();
+  } catch (e) { console.warn(e); fallback(); }
+}
+function bindClicks(map, layer) {
+  map.on("click", layer, e => { const f = e.features[0]; if (f) select(f.properties.i, false); });
+  map.on("mouseenter", layer, () => map.getCanvas().style.cursor = "pointer");
+  map.on("mouseleave", layer, () => map.getCanvas().style.cursor = "");
+}
+function closeAttrib() { document.querySelectorAll(".maplibregl-ctrl-attrib.maplibregl-compact").forEach(a => { a.classList.remove("maplibregl-compact-show"); a.removeAttribute("open"); }); }
+function applyLayers() {
+  closeAttrib();
+  if (mReady) { mm.setLayoutProperty("pts", "visibility", LY.pts ? "visible" : "none"); mm.setLayoutProperty("grid", "visibility", LY.grid ? "visible" : "none"); mm.setPaintProperty("pts", "circle-color", colExpr()); }
+  if (wReady) { wm.setLayoutProperty("arr", "visibility", LY.arrows ? "visible" : "none"); wm.setLayoutProperty("clim", "visibility", LY.climes ? "visible" : "none");
+    wm.setLayoutProperty("routes", "visibility", LY.routes ? "visible" : "none"); wm.setLayoutProperty("relief", "visibility", LY.relief ? "visible" : "none");
+    wm.setPaintProperty("relief", "raster-opacity", LY.reliefK / 100); wm.setPaintProperty("pts", "circle-color", colExpr()); }
+  legend();
+  if (FB) FB.draw();
+}
+function layersControl() {
+  const mk = (box, html) => { const w = document.createElement("div"); w.className = "lyrWrap";
+    w.innerHTML = `<button class="lyrBtn" aria-expanded="false">Map layers</button><div class="lyrPanel" hidden>${html}<button class="reset">Reset layers</button></div>`;
+    document.getElementById(box).appendChild(w);
+    const b = w.querySelector(".lyrBtn"), p = w.querySelector(".lyrPanel");
+    ["click", "dblclick", "mousedown", "touchstart", "wheel"].forEach(t => w.addEventListener(t, e => e.stopPropagation(), { passive: true }));
+    b.onclick = () => { const o = p.hidden; p.hidden = !o; b.setAttribute("aria-expanded", o); };
+    w.querySelectorAll("input[data-l][type=checkbox]").forEach(i => { i.checked = !!LY[i.dataset.l]; i.onchange = () => { LY[i.dataset.l] = i.checked; saveLY(); syncBoxes(); applyLayers(); }; });
+    w.querySelectorAll("input[data-l][type=range]").forEach(i => { i.value = LY[i.dataset.l]; i.oninput = () => { LY[i.dataset.l] = +i.value; saveLY(); applyLayers(); }; });
+    w.querySelectorAll("input[name^=col]").forEach(i => { i.checked = i.value === S.colour; i.onchange = () => { S.colour = i.value; syncBoxes(); applyLayers(); }; });
+    w.querySelector(".reset").onclick = () => { Object.assign(LY, LYDEF); S.colour = "region"; saveLY(); syncBoxes(); applyLayers(); };
+  };
+  const colRows = n => `<div class="hd">Colour the towns by</div><div class="row"><label><input type="radio" name="col${n}" value="region">Region</label></div><div class="row"><label><input type="radio" name="col${n}" value="error">Local error (km)</label></div>`;
+  mk("mmap", `<div class="hd">Layers</div><div class="row"><label><input type="checkbox" data-l="pts">Located towns</label></div>
+    <div class="row"><label><input type="checkbox" data-l="grid">Modern grid, bent to the map</label><div class="sub">every 10 degrees of latitude and longitude, where towns are near</div></div>${colRows(1)}`);
+  mk("wmap", `<div class="hd">Layers</div>
+    <div class="row"><label><input type="checkbox" data-l="climes">The map's climate lines</label><div class="sub">red dashes: the old boundaries laid on the globe</div></div>
+    <div class="row"><label><input type="checkbox" data-l="arrows">Where the map puts each town</label><div class="sub">grey line to the position given by the whole-map fit</div></div>
+    <div class="row"><label><input type="checkbox" data-l="routes">Al-Idrisi's road distances</label><div class="sub">blue: in miles; gold: in days</div></div>
+    <div class="row"><label><input type="checkbox" data-l="relief">Shaded relief (Esri)</label><div class="sub"><span>opacity</span><input type="range" min="10" max="80" data-l="reliefK" aria-label="Relief opacity"></div></div>${colRows(2)}`);
+}
+function syncBoxes() {
+  document.querySelectorAll("input[data-l][type=checkbox]").forEach(i => i.checked = !!LY[i.dataset.l]);
+  document.querySelectorAll("input[data-l][type=range]").forEach(i => i.value = LY[i.dataset.l]);
+  document.querySelectorAll("input[name^=col]").forEach(i => i.checked = i.value === S.colour);
+  document.querySelectorAll("#viewRow .btn[data-col]").forEach(b => b.setAttribute("aria-pressed", b.dataset.col === S.colour));
+  document.querySelectorAll("#viewRow .btn[data-grid]").forEach(b => b.setAttribute("aria-pressed", !!LY.grid));
+}
+function legend() {
+  const lg = document.getElementById("legend");
+  const cols = S.colour === "region" ? REGS.map((g, i) => `<span><i style="background:${RCOL[i]}"></i>${esc(g)}</span>`).join("")
+    : `<span><i class="ramp"></i>local error: 0, 60, 120, 250, 500+ km</span>`;
+  lg.innerHTML = cols + `<span><i style="background:transparent;border:2px solid #B4372A"></i>selected town</span>` + (LY.climes ? `<span><i class="dl" style="border-color:#B4372A"></i>climate lines (right)</span>` : "") +
+    (LY.grid ? `<span><i class="dl" style="border-color:#23468C"></i>modern grid (left)</span>` : "") + (LY.arrows ? `<span><i class="ln" style="border-color:#7D776D"></i>to the map's position</span>` : "");
+}
+
+/* ---------- selection ---------- */
+const rowOf = i => LOC[i];
+function drawSel() {
+  pins.forEach(p => p.remove()); pins = [];
+  const r = S.sel != null ? rowOf(S.sel) : null;
+  const empty = { type: "FeatureCollection", features: [] }, pt = c => ({ type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: c } }] });
+  if (mReady) mm.getSource("sel").setData(r ? pt(px2ll(r[LC.x], r[LC.y])) : empty);
+  if (wReady) wm.getSource("sel").setData(r ? pt([r[LC.lon], r[LC.lat]]) : empty);
+  if (!r || typeof maplibregl === "undefined") return;
+  const pin = (map, c, txt) => { const d = document.createElement("div"); d.className = "pinL"; d.textContent = txt; pins.push(new maplibregl.Marker({ element: d, anchor: "bottom", offset: [0, -12] }).setLngLat(c).addTo(map)); };
+  if (mReady) pin(mm, px2ll(r[LC.x], r[LC.y]), r[LC.label]);
+  if (wReady) pin(wm, [r[LC.lon], r[LC.lat]], r[LC.ident].split(" (")[0]);
+}
+const RN = i => `<span class="chip" style="background:${RCOL[i]}"></span>${esc(REGS[i])}`;
+function side() {
+  const box = document.getElementById("side"); const r = S.sel != null ? rowOf(S.sel) : null;
+  if (!r) { box.innerHTML = `<div class="sub">Click a dot on either map, or search above. Every dot is a town label I read on the old map, shown on both maps.</div>`; return; }
+  const gz = [r[LC.th] && `al-Thurayya: ${esc(r[LC.th])}`, r[LC.pl] && `Pleiades: ${esc(r[LC.pl])}`, r[LC.ne] && `Natural Earth: ${esc(r[LC.ne])}`].filter(Boolean).join("; ") || "not listed in the three gazetteers (a small place)";
+  box.innerHTML = `<div class="sub">${RN(r[LC.reg])} · climate ${ROMAN[r[LC.climate]]}, section ${r[LC.section]}</div><div class="big">${esc(r[LC.ident])}</div>
+    <table><tr><td>On the map</td><td>${esc(r[LC.label])} (Miller's transcription)${r[LC.conf] === "high" ? "" : ", read with some doubt"}</td></tr>
+    <tr><td>Really at</td><td>${Math.abs(r[LC.lat]).toFixed(2)}° ${r[LC.lat] >= 0 ? "N" : "S"}, ${Math.abs(r[LC.lon]).toFixed(2)}° ${r[LC.lon] >= 0 ? "E" : "W"}</td></tr>
+    <tr><td>Map puts it at</td><td>${Math.abs(r[LC.fit_lat]).toFixed(1)}° N, ${Math.abs(r[LC.fit_lon]).toFixed(1)}° ${r[LC.fit_lon] >= 0 ? "E" : "W"}, ${fmt(r[LC.resid_km])} km away (whole-map fit)</td></tr>
+    <tr><td>Local error</td><td>${fmt(r[LC.local_km])} km from where its eight nearest neighbours on the map put it</td></tr>
+    <tr><td>Checked in</td><td>${gz}</td></tr></table>`;
+}
+function select(i, move = true) {
+  S.sel = i; const r = rowOf(i); if (!r) return;
+  drawSel(); side();
+  if (mReady) mm.flyTo({ center: px2ll(r[LC.x], r[LC.y]), zoom: Math.max(mm.getZoom(), 5.6), duration: 800 });
+  if (wReady) wm.flyTo({ center: [r[LC.lon], r[LC.lat]], zoom: Math.max(wm.getZoom(), 4), duration: 800 });
+  if (FB) FB.draw();
+  if (move && small()) document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+window.select = select;
+function fitRegion(names) {
+  const rs = LOC.filter(r => names.includes(REGS[r[LC.reg]])); if (!rs.length) return;
+  const lo = rs.map(r => r[LC.lon]), la = rs.map(r => r[LC.lat]);
+  if (wReady) wm.fitBounds([[Math.min(...lo) - 1, Math.min(...la) - 1], [Math.max(...lo) + 1, Math.max(...la) + 1]], { padding: 24, duration: 800, maxZoom: 7 });
+  if (mReady) { const xs = rs.map(r => r[LC.x]), ys = rs.map(r => r[LC.y]); mm.fitBounds([px2ll(Math.min(...xs) - 80, Math.max(...ys) + 80), px2ll(Math.max(...xs) + 80, Math.min(...ys) - 80)], { padding: 20, duration: 800, bearing: S.north ? 180 : 0 }); }
+}
+
+/* ---------- controls ---------- */
+function setNorth(on) {
+  S.north = on; document.getElementById("orient").textContent = on ? "turned north up (labels upside down)" : "south at the top, as drawn";
+  document.querySelectorAll("#viewRow .btn[data-north]").forEach(b => b.setAttribute("aria-pressed", on));
+  if (mReady) mm.rotateTo(on ? 180 : 0, { duration: 900 });
+  if (FB) FB.draw();
+}
+(function viewRow() {
+  const row = document.getElementById("viewRow");
+  const n = document.createElement("button"); n.className = "btn turn"; n.dataset.north = 1; n.textContent = "Turn north up"; n.setAttribute("aria-pressed", "false"); row.appendChild(n);
+  n.onclick = () => setNorth(!S.north);
+  const g = document.createElement("button"); g.className = "btn"; g.dataset.grid = 1; g.textContent = "Modern grid"; row.appendChild(g);
+  g.onclick = () => { LY.grid = !LY.grid; saveLY(); syncBoxes(); applyLayers(); };
+  [["region", "Colour by region"], ["error", "Colour by local error"]].forEach(([v, t]) => { const b = document.createElement("button"); b.className = "btn"; b.dataset.col = v; b.textContent = t; row.appendChild(b);
+    b.onclick = () => { S.colour = v; syncBoxes(); applyLayers(); }; });
+  syncBoxes();
+})();
+(function focusRow() {
+  const row = document.getElementById("focusRow");
+  const F = [["Whole map", null], ["Sicily", ["Sicily and Malta"]], ["Al-Andalus", ["Iberia"]], ["The Nile", ["Egypt and Nubia"]], ["England and France", ["England", "France and the Low Countries"]],
+    ["Syria and Iraq", ["Syria and Palestine", "Iraq and the Jazira"]], ["Arabia", ["Arabia"]], ["Persia and beyond", ["Iran and the Caucasus", "Central Asia and Afghanistan"]]];
+  F.forEach(([t, names]) => { const x = document.createElement("button"); x.className = "btn"; x.textContent = t; row.appendChild(x);
+    x.onclick = () => {
+      if (!names) { S.sel = null; drawSel(); side(); if (mReady) mm.fitBounds(MB, { padding: 4, duration: 800, bearing: S.north ? 180 : 0 }); if (wReady) wm.flyTo({ center: small() ? [28, 34] : [30, 36], zoom: small() ? 1.1 : 1.6, duration: 800 }); if (FB) FB.draw(); return; }
+      fitRegion(names); if (small()) document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" });
+    }; });
+})();
+(function search() {
+  const q = document.getElementById("q"), sug = document.getElementById("sug");
+  const IDX = LOC.map(r => ({ i: r[LC.i], t: r[LC.ident], s: r[LC.label] + " · " + REGS[r[LC.reg]], h: (r[LC.ident] + " " + r[LC.label]).toLowerCase() }));
+  let cur = [], ai = -1;
+  const show = () => { sug.innerHTML = cur.map((c, i) => `<li role="option" aria-selected="${i === ai}" data-i="${i}">${esc(c.t)} <span>${esc(c.s)}</span></li>`).join(""); sug.style.display = cur.length ? "block" : "none";
+    sug.querySelectorAll("li").forEach(li => li.onmousedown = e => { e.preventDefault(); pick(cur[+li.dataset.i]); }); };
+  const pick = c => { if (!c) return; q.value = c.t; sug.style.display = "none"; select(c.i); };
+  q.addEventListener("input", () => { const v = q.value.trim().toLowerCase(); ai = -1; if (v.length < 2) { cur = []; show(); return; }
+    cur = IDX.filter(x => x.h.includes(v)).sort((a, b) => (a.t.toLowerCase().startsWith(v) ? 0 : 1) - (b.t.toLowerCase().startsWith(v) ? 0 : 1)).slice(0, 12); show(); });
+  q.addEventListener("keydown", e => { if (e.key === "ArrowDown") { ai = Math.min(cur.length - 1, ai + 1); show(); e.preventDefault(); } else if (e.key === "ArrowUp") { ai = Math.max(0, ai - 1); show(); e.preventDefault(); }
+    else if (e.key === "Enter") { pick(cur[ai >= 0 ? ai : 0]); } else if (e.key === "Escape") { sug.style.display = "none"; } });
+  q.addEventListener("blur", () => setTimeout(() => sug.style.display = "none", 150));
+})();
+
+/* ---------- fallback: no map library ---------- */
+function fallback() {
+  const mbox = document.getElementById("mmap"), wbox = document.getElementById("wmap");
+  [mbox, wbox].forEach(b => b.querySelector(".loading")?.remove());
+  const img = new Image(); img.src = IMG.small;
+  const mk = (box, note) => { const cv = document.createElement("canvas"); cv.className = "fallback"; box.appendChild(cv); const n = document.createElement("div"); n.className = "fbnote"; n.textContent = note; box.appendChild(n); return cv; };
+  const mc = mk(mbox, "The map library did not load, so this is a still view. Click a dot to select a town."), wc = mk(wbox, "Still view of the modern map (Natural Earth). Click a dot to select a town.");
+  const geo = { lo0: -12, lo1: 82, la0: 8, la1: 60 };
+  let mT = null, wT = null;
+  const colOf = r => S.colour === "region" ? RCOL[r[LC.reg]] : errCol(r[LC.local_km]);
+  const draw = () => {
+    const d = devicePixelRatio || 1;
+    { const W = mbox.clientWidth, H = mbox.clientHeight; mc.width = W * d; mc.height = H * d; const x = mc.getContext("2d"); x.setTransform(d, 0, 0, d, 0, 0);
+      x.fillStyle = "#E8DCBE"; x.fillRect(0, 0, W, H); const k = Math.min(W / IMG.w, H / IMG.h), ox = (W - IMG.w * k) / 2, oy = (H - IMG.h * k) / 2; mT = { k, ox, oy };
+      x.save(); if (S.north) { x.translate(W, H); x.rotate(Math.PI); }
+      if (img.complete && img.naturalWidth) x.drawImage(img, ox, oy, IMG.w * k, IMG.h * k);
+      if (LY.pts) LOC.forEach(r => { x.beginPath(); x.arc(ox + r[LC.x] * k, oy + r[LC.y] * k, r[LC.i] === S.sel ? 6 : 2.6, 0, 7); x.fillStyle = colOf(r); x.fill(); x.strokeStyle = r[LC.i] === S.sel ? "#B4372A" : "#fff"; x.lineWidth = r[LC.i] === S.sel ? 3 : .8; x.stroke(); });
+      x.restore(); }
+    { const W = wbox.clientWidth, H = wbox.clientHeight; wc.width = W * d; wc.height = H * d; const x = wc.getContext("2d"); x.setTransform(d, 0, 0, d, 0, 0);
+      const cl = Math.cos(36 * Math.PI / 180), k = Math.min(W / ((geo.lo1 - geo.lo0) * cl), H / (geo.la1 - geo.la0)), ox = (W - k * cl * (geo.lo1 - geo.lo0)) / 2, oy = (H - k * (geo.la1 - geo.la0)) / 2; wT = { k, ox, oy, cl };
+      const P = (lo, la) => [ox + (lo - geo.lo0) * k * cl, oy + (geo.la1 - la) * k];
+      x.fillStyle = css("--sea"); x.fillRect(0, 0, W, H); x.fillStyle = css("--land");
+      WORLD.features.forEach(f => { const g = f.geometry, polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates; polys.forEach(pg => { x.beginPath(); pg[0].forEach((c, j) => { const [a, b] = P(c[0], c[1]); j ? x.lineTo(a, b) : x.moveTo(a, b); }); x.fill(); }); });
+      if (LY.climes) { x.strokeStyle = "#B4372A"; x.setLineDash([4, 3]); x.lineWidth = 1.2; SITE.climate_lines.forEach(l => { x.beginPath(); l.pts.forEach((c, j) => { const [a, b] = P(c[0], c[1]); j ? x.lineTo(a, b) : x.moveTo(a, b); }); x.stroke(); }); x.setLineDash([]); }
+      LOC.forEach(r => { const [a, b] = P(r[LC.lon], r[LC.lat]); x.beginPath(); x.arc(a, b, r[LC.i] === S.sel ? 6 : 2.8, 0, 7); x.fillStyle = colOf(r); x.fill(); x.strokeStyle = r[LC.i] === S.sel ? "#B4372A" : "#fff"; x.lineWidth = r[LC.i] === S.sel ? 3 : .8; x.stroke(); }); }
+  };
+  const hit = (e, box, geoMode) => { const b = box.getBoundingClientRect(); let mx = e.clientX - b.left, my = e.clientY - b.top; if (!geoMode && S.north) { mx = b.width - mx; my = b.height - my; } let best = null, bd = 12;
+    LOC.forEach(r => { let px, py; if (geoMode) { px = wT.ox + (r[LC.lon] - geo.lo0) * wT.k * wT.cl; py = wT.oy + (geo.la1 - r[LC.lat]) * wT.k; } else { px = mT.ox + r[LC.x] * mT.k; py = mT.oy + r[LC.y] * mT.k; }
+      const dd = Math.hypot(px - mx, py - my); if (dd < bd) { bd = dd; best = r[LC.i]; } }); if (best != null) select(best, false); };
+  mc.addEventListener("click", e => hit(e, mbox, false)); wc.addEventListener("click", e => hit(e, wbox, true));
+  img.onload = draw; draw(); new ResizeObserver(draw).observe(mbox); new ResizeObserver(draw).observe(wbox); redraws.push(draw);
+  FB = { draw };
+}
+
+/* ---------- charts ---------- */
+function climChart() {
+  const box = document.getElementById("climChart"); const B = R.climate_summary.bounds;
+  resp(box, (W, sm) => { const lw = sm ? 70 : 92, rh = sm ? 34 : 40, top = 6, H = top + 7 * rh + 34, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "True latitude of towns by climate" }, box);
+    const x = v => lw + (v - 10) / (56 - 10) * (W - lw - 12);
+    [10, 20, 30, 40, 50].forEach(v => { el("line", { x1: x(v), x2: x(v), y1: top, y2: top + 7 * rh, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 18, v + "° N", "lab s m", "middle"); });
+    lbl(svg, (lw + W) / 2, H - 2, "true latitude", "lab s m", "middle");
+    B.forEach(b => el("line", { x1: x(b), x2: x(b), y1: top, y2: top + 7 * rh, stroke: "#B4372A", "stroke-dasharray": "4 3", "stroke-width": 1.4 }, svg));
+    for (let k = 7; k >= 1; k--) { const y = top + (7 - k) * rh + rh / 2; lbl(svg, lw - 10, y + 4, "Climate " + ROMAN[k], "lab", "end");
+      LOC.filter(r => r[LC.climate] === k).forEach((r, j) => { const jit = ((r[LC.i] * 37) % 17 - 8) / 8 * rh * .3;
+        const c = el("circle", { cx: x(r[LC.lat]), cy: y + jit, r: sm ? 2.6 : 3.2, fill: RCOL[r[LC.reg]], "fill-opacity": .85, stroke: css("--card"), "stroke-width": .6 }, svg);
+        c.addEventListener("mousemove", e => showTip(`<b>${esc(r[LC.ident])}</b><br>climate ${ROMAN[k]}, really ${r[LC.lat].toFixed(1)}° N`, e.clientX, e.clientY)); c.addEventListener("mouseleave", hideTip);
+        c.style.cursor = "pointer"; c.addEventListener("click", () => select(r[LC.i])); }); } });
+}
+function regChart() {
+  const box = document.getElementById("regChart"); const D = Object.values(R.regions).filter(r => r.scored).sort((a, b) => a.median_local_km - b.median_local_km);
+  resp(box, (W, sm) => { const lw = sm ? 150 : 210, rh = 26, H = 8 + D.length * rh + 26, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Median local error by region" }, box);
+    const mx = Math.max(...D.map(d => d.median_local_km)) * 1.12, x = v => lw + v / mx * (W - lw - 50);
+    [0, 50, 100, 150, 200, 250].filter(v => v <= mx).forEach(v => { el("line", { x1: x(v), x2: x(v), y1: 4, y2: 8 + D.length * rh, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v + " km", "lab s m", "middle"); });
+    D.forEach((d, i) => { const y = 8 + i * rh; lbl(svg, lw - 8, y + rh / 2 + 4, d.region, "lab", "end");
+      const r = el("rect", { x: x(0), y: y + 5, width: Math.max(1, x(d.median_local_km) - x(0)), height: rh - 10, fill: RCOL[REGS.indexOf(d.region)], "fill-opacity": .9 }, svg);
+      r.addEventListener("mousemove", e => showTip(`<b>${esc(d.region)}</b><br>median local error ${d.median_local_km} km<br>${d.n} towns; direction error ${d.median_brg_err}°; drawn at ×${d.stretch.toFixed(2)}`, e.clientX, e.clientY)); r.addEventListener("mouseleave", hideTip);
+      r.style.cursor = "pointer"; r.addEventListener("click", () => { fitRegion([d.region]); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+      lbl(svg, x(d.median_local_km) + 5, y + rh / 2 + 4, d.median_local_km + " km", "lab b"); }); });
+}
+function routeChart() {
+  const box = document.getElementById("routeChart"); const D = SITE.routes.filter(r => r[RC.miles]);
+  resp(box, (W, sm) => { const H = Math.min(420, W * .72), ml = 54, mb = 38, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Stated miles against straight line distance" }, box);
+    const lx = Math.log10, x = v => ml + (lx(v) - lx(4)) / (lx(700) - lx(4)) * (W - ml - 12), y = v => H - mb - (lx(v) - lx(4)) / (lx(1500) - lx(4)) * (H - mb - 10);
+    [5, 10, 50, 100, 500].forEach(v => { el("line", { x1: x(v), x2: x(v), y1: y(4), y2: y(1500), stroke: css("--rule") }, svg); lbl(svg, x(v), H - 20, v, "lab s m", "middle"); });
+    [5, 10, 50, 100, 500, 1000].forEach(v => { el("line", { x1: x(4), x2: x(700), y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, ml - 6, y(v) + 4, fmt(v), "lab s m", "end"); });
+    lbl(svg, (ml + W) / 2, H - 3, "distance stated by al-Idrisi (Arab miles)", "lab s m", "middle");
+    const t = lbl(svg, 12, (H - mb) / 2, "straight line today (km)", "lab s m", "middle"); t.setAttribute("transform", `rotate(-90 12 ${(H - mb) / 2})`);
+    const k = R.routes.median_km_per_mile;
+    el("line", { x1: x(4), y1: y(4 * 2), x2: x(700), y2: y(700 * 2), stroke: css("--saffron"), "stroke-dasharray": "5 4", "stroke-width": 1.6 }, svg);
+    el("line", { x1: x(4), y1: y(4 * k), x2: x(700), y2: y(700 * k), stroke: css("--lapis"), "stroke-width": 1.6 }, svg);
+    lbl(svg, x(160), y(160 * 2) - 8, "2 km a mile", "lab s", "end").setAttribute("fill", css("--saffron"));
+    lbl(svg, x(200), y(200 * k) + 16, `median ${k.toFixed(2)} km a mile`, "lab s", "start").setAttribute("fill", css("--lapis"));
+    D.forEach(r => { const c = el("circle", { cx: x(r[RC.miles]), cy: y(Math.max(4, r[RC.km])), r: 4.4, fill: css("--lapis"), "fill-opacity": .8, stroke: css("--card"), "stroke-width": .8 }, svg);
+      c.addEventListener("mousemove", e => showTip(`<b>${esc(r[RC.from])} to ${esc(r[RC.to])}</b><br>${r[RC.miles]} miles in the text${r[RC.days] ? ", " + r[RC.days] + " days" : ""}<br>${fmt(r[RC.km])} km in a straight line (${r[RC.km_per_mile].toFixed(2)} km a mile)`, e.clientX, e.clientY)); c.addEventListener("mouseleave", hideTip); }); });
+}
+function cmpChart() {
+  const box = document.getElementById("cmpChart"); const J = R.jerusalem, H0 = R.hereford;
+  const M = [["Spread of positions explained", J.sim_r2 * 100, H0.fit_r2 * 100, "%", 100, true], ["Median miss from the fitted map", J.sim_median_disp_km, H0.median_disp_km, " km", 600, false],
+    ["Direction error from Jerusalem", J.median_brg_err, H0.bearing_median_err, "°", 25, false], ["Within 45° of the right way", J.within45_pct, H0.bearing_within45_pct, "%", 100, true]];
+  resp(box, (W, sm) => { const lw = sm ? 0 : 270, rh = sm ? 66 : 50, H = 8 + M.length * rh + 6, svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Al-Idrisi against Hereford" }, box);
+    M.forEach(([t, a, b, u, mx, up], i) => { const y0 = 8 + i * rh, bx = sm ? 0 : lw, yb = sm ? y0 + 18 : y0, bw = W - bx - 70, x = v => bx + v / mx * bw;
+      lbl(svg, sm ? 0 : lw - 10, sm ? y0 + 10 : y0 + 17, t, "lab", sm ? "start" : "end");
+      [[a, css("--lapis"), "al-Idrisi 1154"], [b, css("--red"), "Hereford c. 1300"]].forEach(([v, c, nm], j) => { const yy = yb + j * 15;
+        const r = el("rect", { x: bx, y: yy + 2, width: Math.max(1, x(v) - bx), height: 12, fill: c, "fill-opacity": .9 }, svg);
+        r.addEventListener("mousemove", e => showTip(`<b>${nm}</b><br>${t}: ${Math.round(v)}${u}`, e.clientX, e.clientY)); r.addEventListener("mouseleave", hideTip);
+        lbl(svg, x(v) + 5, yy + 12, Math.round(v) + u, "lab s b"); }); });
+  });
+  box.insertAdjacentHTML("afterend", `<div class="legend"><span><i class="sq" style="background:var(--lapis)"></i>al-Idrisi, 1154</span><span><i class="sq" style="background:var(--red)"></i>Hereford Mappa Mundi, about 1300</span></div>`);
+}
+function regTable() {
+  const t = document.getElementById("regTable"); const D = Object.values(R.regions).filter(r => r.n > 0);
+  t.innerHTML = `<thead><tr><th>Region</th><th class="r">Towns</th><th class="r">Local error</th><th class="r">Direction</th><th class="r">Drawn at</th></tr></thead><tbody>` +
+    D.map(d => `<tr data-k="${esc(d.region)}"><td><span class="chip" style="background:${RCOL[REGS.indexOf(d.region)]}"></span>${esc(d.region)}</td><td class="r">${d.n}</td><td class="r">${d.median_local_km} km</td><td class="r">${d.scored ? d.median_brg_err + "°" : "too few"}</td><td class="r">${d.scored ? "×" + d.stretch.toFixed(2) : "too few"}</td></tr>`).join("") + "</tbody>";
+  t.querySelectorAll("tr[data-k]").forEach(tr => tr.onclick = () => { fitRegion([tr.dataset.k]); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+}
+
+/* ---------- theme ---------- */
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark";
+  const P = pal();
+  if (wReady) { wm.setPaintProperty("bg", "background-color", P.sea); wm.setPaintProperty("land", "fill-color", P.land); wm.setPaintProperty("borders", "line-color", P.border); }
+  redraws.forEach(f => f()); };
+
+startMaps(); side(); legend(); climChart(); regChart(); routeChart(); cmpChart(); regTable();
+</script>
+/*FULLSCREEN*/
+</body>
+</html>

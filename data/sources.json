@@ -1,0 +1,26 @@
+{
+ "dozy": {
+  "title": "Description de l'Afrique et de l'Espagne par Edrisi. : Texte arabe publié pour la première fois d'après les man. de Paris et d'Oxford ... par R. Dozy et J. de Goeje. med fransk övers",
+  "date": "1866",
+  "licence": "http://creativecommons.org/publicdomain/mark/1.0/",
+  "ia": "https://archive.org/details/bub_gb_6EMNNqPF2zAC",
+  "ocr_lines": 39132
+ },
+ "miller": {
+  "url": "https://commons.wikimedia.org/wiki/File:Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg",
+  "licence": "Public domain",
+  "size": [
+   12999,
+   5958
+  ]
+ },
+ "thurayya": {
+  "url": "https://github.com/althurayya/althurayya.github.io",
+  "licence": "CC BY 4.0",
+  "places": 2518
+ },
+ "pleiades": {
+  "version": "4.1",
+  "licence": "CC BY 3.0"
+ }
+}
