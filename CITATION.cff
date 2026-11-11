@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite it as below."
+title: "Al-Idrisi's World: The Map Made for Roger II of Sicily in 1154, Set Against a Modern Map"
+type: dataset
+authors:
+  - family-names: Hotham
+    given-names: Tristan
+    orcid: "https://orcid.org/0000-0003-4931-9349"
+    affiliation: "Independent researcher"
+doi: "10.5281/zenodo.23882607"
+url: "https://maps.tristanhotham.com/idrisi/"
+repository-code: "https://github.com/Tristan-Hotham/idrisi"
+license: CC-BY-4.0
+keywords:
+  - "medieval cartography"
+  - "Islamic geography"
+  - "al-Idrisi"
+  - "Tabula Rogeriana"
+  - "Roger II"
+  - "Sicily"
+  - "map distortion"
+  - "climates"
+  - "Hereford Mappa Mundi"
+  - "open data"
+  - "maps"
